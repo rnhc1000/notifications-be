@@ -1,8 +1,8 @@
-## G1l4 Challenge - @Ricardo Ferreira
+## Take-home Microservices Challenge
 This is how we faced the challenge of creating some microservices
 to consume notifications services.
 ## _Table of contents_
-- [Challenge code - @Ricardo Ferreira](#professional-web-page---ricardo-ferreira)
+- [Challenge code - @Ricardo Ferreira])
 - [_Table of contents_](#table-of-contents)
 - [_Overview_](#overview)
 - [_Screenshot_](#screenshot)
@@ -19,7 +19,7 @@ H2 DB.
 - src|
     - main
     - java|
-      - com/gila/challenge/notification|
+      - com/xxx/challenge/notification|
         - config
         - dto
         - entity
@@ -46,7 +46,9 @@ H2 DB.
  ## _How I did it_
 ```java
 package com.xxxx.challenge.notification.config;
-
+/*
+ * Creating Queues  and Bindings
+ */
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
