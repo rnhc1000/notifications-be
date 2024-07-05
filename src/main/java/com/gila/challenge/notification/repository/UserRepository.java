@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-  @Query ("select user_Id as id  from User u where u.user_Id is not null")
+  @Query ("select user_id as id  from User u where u.user_id is not null")
   Long getId();
 
 }

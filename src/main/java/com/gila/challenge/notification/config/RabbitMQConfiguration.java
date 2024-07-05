@@ -1,6 +1,8 @@
 package com.gila.challenge.notification.config;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -13,8 +15,12 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
 @Configuration
 public class RabbitMQConfiguration {
+
+  private static final  Logger logger = LoggerFactory.getLogger(RabbitMQConfiguration.class);
+
   @Value ("${rabbitmq.queue.message.name}")
   private String queueMessage;
 
@@ -58,6 +64,8 @@ public class RabbitMQConfiguration {
 
   @Bean
   public RabbitAdmin createRabbitAdmin(ConnectionFactory connectionFactory) {
+
+    logger.info("RabbitMQ -> Creating Message Exchange and SNS, Email amd Message Queues...");
     return new RabbitAdmin(connectionFactory);
   }
 
