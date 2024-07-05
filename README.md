@@ -46,7 +46,9 @@ H2 DB.
  ## _How I did it_
 ```java
 package com.xxxx.challenge.notification.config;
-
+/*
+ * Creating Queues  and Bindings
+ */
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
