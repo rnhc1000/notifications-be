@@ -1,6 +1,6 @@
-## Take-home Microservices Challenge
+**## Take-home Microservices Challenge
 This is how we faced the challenge of creating some microservices
-to consume notifications services.
+to consume notifications services.**
 ## _Table of contents_
 - [Challenge code - @Ricardo Ferreira])
 - [_Table of contents_](#table-of-contents)
@@ -36,10 +36,10 @@ H2 DB.
 ## _Screenshot_
 [![](./notification.png)]()
 ## _Links_
-- Live Site URL: [https://www.ferreiras.dev.br] 
+- Live Site URL: [http://127.0.0.1:8095/swagger-ui/index.html] 
 ## _Built with_
 
-[![My Skills](https://skillicons.dev/icons?i=java,spring,redhat,aws,idea)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=java,spring,redhat,aws,idea,git,github)](https://skillicons.dev)
 
 
 

@@ -1,15 +1,9 @@
 package com.gila.challenge.notification.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Set;
 
 
 @Entity
@@ -20,8 +14,8 @@ import java.util.Set;
                 @UniqueConstraint (columnNames = "phone")
         })
 public class User {
-  public User(Long user_Id, String name, String email, String phone) {
-    this.user_Id = user_Id;
+  public User(Long user_id, String name, String email, String phone) {
+    this.user_id = user_id;
     this.name = name;
     this.email = email;
     this.phone = phone;
@@ -32,7 +26,7 @@ public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long user_Id;
+  private Long user_id;
 
   @NotBlank
   @Column (unique = true)
@@ -51,12 +45,12 @@ public class User {
   public User(Long id) {
   }
 
-  public Long getUser_Id() {
-    return user_Id;
+  public Long getUser_id() {
+    return user_id;
   }
 
-  public void setUser_Id(Long user_Id) {
-    this.user_Id = user_Id;
+  public void setUser_id(Long user_id) {
+    this.user_id = user_id;
   }
 
   public String getName() {

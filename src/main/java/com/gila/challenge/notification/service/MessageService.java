@@ -9,6 +9,7 @@ import com.gila.challenge.notification.payload.MessageRequestDto;
 import com.gila.challenge.notification.payload.MessageResponseDto;
 import com.gila.challenge.notification.repository.MessageRepository;
 import com.gila.challenge.notification.repository.UserRepository;
+import com.gila.challenge.notification.service.exceptions.DatabaseException;
 import com.gila.challenge.notification.service.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,15 +50,21 @@ public class MessageService {
   public MessageResponseDto persist(MessageRequestDto messageRequestDto, User user) {
 
     Message message = MapperMessages.INSTANCE.dtoToMessage(messageRequestDto);
-//    Long id = 0L;
-//
-//      logger.info(String.format(("Value of id = %s"), id));
-//      id = userRepository.getId();
-//      logger.info("Value not returned!!!");
-//
-//
-//    message.setUser(new User(id));
-//    logger.info("Id inserted...");
+    Long id = 0L;
+      try {
+        id = userRepository.getId();
+        logger.info(String.format(("Value of id = %s"), id));
+      } catch(DatabaseException ex)  {
+        logger.info("Database error access");
+        logger.info("Value not returned!!!");
+      }
+
+
+
+
+
+    message.setUser(new User(id));
+    logger.info("Id inserted...");
     messageRepository.save(message);
 
     notifyRabbitMq(message);
@@ -67,7 +74,7 @@ public class MessageService {
 
 //  @Transactional
 //  public User recoverUserId(User user) {
-//    return userRepository.findById(user.getUser_Id());
+//    return userRepository.findById(user.getUser_id());
 //  }
   private void notifyRabbitMq(Message message) {
 
