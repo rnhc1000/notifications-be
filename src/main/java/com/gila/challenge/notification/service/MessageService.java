@@ -49,15 +49,15 @@ public class MessageService {
   public MessageResponseDto persist(MessageRequestDto messageRequestDto, User user) {
 
     Message message = MapperMessages.INSTANCE.dtoToMessage(messageRequestDto);
-    Long id = 0L;
-
-      logger.info(String.format(("Value of id = %s"), id));
-      id = userRepository.getId();
-      logger.info("Value not returned!!!");
-
-
-    message.setUser(new User(id));
-    logger.info("Id inserted...");
+//    Long id = 0L;
+//
+//      logger.info(String.format(("Value of id = %s"), id));
+//      id = userRepository.getId();
+//      logger.info("Value not returned!!!");
+//
+//
+//    message.setUser(new User(id));
+//    logger.info("Id inserted...");
     messageRepository.save(message);
 
     notifyRabbitMq(message);
