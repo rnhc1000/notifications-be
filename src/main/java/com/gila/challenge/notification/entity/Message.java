@@ -103,4 +103,16 @@ public class Message {
     this.createdAt = createdAt;
   }
 
+  @Override
+  public String toString() {
+    return "Message{" +
+            "messageId=" + messageId +
+            ", message='" + message + '\'' +
+            ", sender='" + sender + '\'' +
+            ", phone='" + phone + '\'' +
+            ", user=" + user +
+            ", email='" + email + '\'' +
+            ", createdAt=" + createdAt +
+            '}';
+  }
 }

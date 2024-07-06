@@ -45,7 +45,7 @@ public class MessageController {
   @PostMapping (value = "/messages")
   public ResponseEntity persistMessage(@RequestBody MessageRequestDto messageRequestDto, User user) {
 
-    MessageResponseDto messageResponseDto = messageService.persist(messageRequestDto,user);
+    MessageResponseDto messageResponseDto = messageService.persist(messageRequestDto);
 
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
             .path("{messageId}")
