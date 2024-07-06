@@ -17,8 +17,11 @@ public interface MapperMessages {
 
   @Mapping (target = "createdAt", ignore = true)
   @Mapping (target = "messageId", ignore = true)
+  @Mapping (target = "user", ignore = true)
   Message dtoToMessage(MessageRequestDto messageRequestDto);
 
+  @Mapping (source = "createdAt", target = "createdAt")
+  @Mapping (source = "messageId", target = "messageId")
   MessageResponseDto messageToDto(Message message);
 
   List<MessageResponseDto> convertListEntityToListDto(Iterable<Message> messages);

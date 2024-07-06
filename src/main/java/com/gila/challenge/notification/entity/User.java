@@ -16,34 +16,38 @@ import jakarta.validation.constraints.Size;
 public class User {
   public User(Long user_id, String name, String email, String phone) {
     this.user_id = user_id;
-    this.name = name;
-    this.email = email;
-    this.phone = phone;
+    this.userName = name;
+    this.userEmail = email;
+    this.userPhone = phone;
+  }
+
+  public User(String userName, String userEmail, String userPhone) {
+    this.userName = userName;
+    this.userEmail = userEmail;
+    this.userPhone = userPhone;
   }
 
   public User() {
   }
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long user_id;
 
   @NotBlank
   @Column (unique = true)
   @Size (min = 4, max = 20)
-  private String name;
+  private String userName;
 
   @NotBlank
   @Email
   @Size (min = 8, max = 40)
-  private String email;
+  private String userEmail;
 
   @NotBlank
   @Size (min = 6, max = 20)
-  private String phone;
+  private String userPhone;
 
-  public User(Long id) {
-  }
 
   public Long getUser_id() {
     return user_id;
@@ -53,29 +57,37 @@ public class User {
     this.user_id = user_id;
   }
 
-  public String getName() {
-    return name;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
-  public String getEmail() {
-    return email;
+  public String getUserEmail() {
+    return userEmail;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setUserEmail(String userEmail) {
+    this.userEmail = userEmail;
   }
 
-  public String getPhone() {
-    return phone;
+  public String getUserPhone() {
+    return userPhone;
   }
 
-  public void setPhone(String phone) {
-    this.phone = phone;
+  public void setUserPhone(String userPhone) {
+    this.userPhone = userPhone;
   }
 
-
+  @Override
+  public String toString() {
+    return "User{" +
+            "user_id=" + user_id +
+            ", userName='" + userName + '\'' +
+            ", userEmail='" + userEmail + '\'' +
+            ", userPhone='" + userPhone + '\'' +
+            '}';
+  }
 }
