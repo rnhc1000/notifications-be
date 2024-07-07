@@ -15,6 +15,7 @@ public class MessageRequestDto implements Serializable {
   private String sender;
   private String phone;
   private String email;
+  private Integer status;
 }
 
 

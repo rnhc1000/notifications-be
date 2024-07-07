@@ -1,102 +1,108 @@
 package com.gila.challenge.notification.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gila.challenge.notification.entity.enums.MessageStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.io.Serializable;
 import java.time.Instant;
 
-
+@Getter
 @Entity
-@Table (name="tb_messages")
-public class Message {
+@Table (name = "tb_messages")
+public class Message implements Serializable {
 
+  private static final long serialVersionUUID = 1L;
+
+  @Getter
   @Id
   @GeneratedValue (strategy = GenerationType.IDENTITY)
   private Long messageId;
 
+  @Getter
   @NotNull
-  @Size (min=1, max=160)
+  @Size (min = 1, max = 160)
   private String message;
 
+  @Getter
   private String sender;
+
+  @Getter
+  private String email;
+
+  @Getter
   private String phone;
 
-  @ManyToOne(cascade={CascadeType.ALL})
-  @JoinColumn(name="user_id")
-  private User user;
+  @Getter
+  @CreationTimestamp
+  private Instant createdAt;
 
-  public User getUser() {
-    return user;
+  private Integer messageStatus = MessageStatus.READY_TO_DELIVER.getCodeStatus();
+
+  @Getter
+  @ManyToOne (cascade = CascadeType.ALL)
+  @JoinColumn (name = "user_id")
+  private User userId;
+
+  public Message(
+          Long messageId, String message,
+          String sender, String phone,
+          User userId, String email,
+          MessageStatus messageStatus, Instant createdAt) {
+    this.messageId = messageId;
+    this.message = message;
+    this.sender = sender;
+    this.phone = phone;
+    this.userId = userId;
+    this.email = email;
+    this.createdAt = createdAt;
+    setMessageStatus(messageStatus);
   }
 
-  public void setUser(User user) {
-    this.user = user;
+  public MessageStatus getMessageStatus() {
+    return MessageStatus.valueOf(messageStatus);
   }
 
-  public String getSender() {
-    return sender;
+  public void setMessageStatus(MessageStatus messageStatus) {
+    if (messageStatus != null) {
+      this.messageStatus = messageStatus.getCodeStatus();
+    }
+  }
+
+  public void setUserId(User userId) {
+    this.userId = userId;
   }
 
   public void setSender(String sender) {
     this.sender = sender;
   }
 
-  public String getPhone() {
-    return phone;
-  }
-
   public void setPhone(String phone) {
     this.phone = phone;
-  }
-
-  public String getEmail() {
-    return email;
   }
 
   public void setEmail(String email) {
     this.email = email;
   }
 
-  private String email;
-  public Message(Long messageId, Instant createdAt) {
+  public Message(Long messageId, Instant createdAt, User userId) {
     this.messageId = messageId;
     this.createdAt = createdAt;
+    this.userId = userId;
   }
 
   public Message() {
-  }
-
-  @CreationTimestamp
-  private Instant createdAt;
-
-  public Long getMessageId() {
-    return messageId;
   }
 
   public void setMessageId(Long messageId) {
     this.messageId = messageId;
   }
 
-
-
-  public String getMessage() {
-    return message;
-  }
-
   public void setMessage(String message) {
     this.message = message;
-  }
-
-  public Instant getCreatedAt() {
-    return createdAt;
   }
 
   public void setCreatedAt(Instant createdAt) {
@@ -106,13 +112,14 @@ public class Message {
   @Override
   public String toString() {
     return "Message{" +
-            "messageId=" + messageId +
-            ", message='" + message + '\'' +
-            ", sender='" + sender + '\'' +
-            ", phone='" + phone + '\'' +
-            ", user=" + user +
-            ", email='" + email + '\'' +
-            ", createdAt=" + createdAt +
-            '}';
+           "messageId=" + messageId +
+           ", message='" + message + '\'' +
+           ", sender='" + sender + '\'' +
+           ", phone='" + phone + '\'' +
+           ", userId=" + userId +
+           ", email='" + email + '\'' +
+           ", createdAt=" + createdAt +
+           '}';
   }
+
 }

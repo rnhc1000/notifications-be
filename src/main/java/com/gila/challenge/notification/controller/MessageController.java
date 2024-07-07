@@ -43,12 +43,12 @@ public class MessageController {
                           schema = @Schema (implementation = MessageController.class)) })})
   @ResponseStatus
   @PostMapping (value = "/messages")
-  public ResponseEntity persistMessage(@RequestBody MessageRequestDto messageRequestDto, User user) {
+  public ResponseEntity persistMessage(@RequestBody MessageRequestDto messageRequestDto) {
 
     MessageResponseDto messageResponseDto = messageService.persist(messageRequestDto);
 
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("{messageId}")
+            .path("/{messageId}")
             .buildAndExpand(messageResponseDto.getMessageId())
             .toUri()
     ).body(messageResponseDto);

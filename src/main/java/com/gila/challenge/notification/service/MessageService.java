@@ -9,7 +9,6 @@ import com.gila.challenge.notification.repository.MessageRepository;
 import com.gila.challenge.notification.repository.UserRepository;
 import com.gila.challenge.notification.service.exceptions.DatabaseException;
 import com.gila.challenge.notification.service.exceptions.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,64 +20,71 @@ import java.util.List;
 
 @Service
 public class MessageService {
+  final static Logger logger = LoggerFactory.getLogger(MessageService.class);
+  private final String exchange;
   @Autowired
   private final NotificationRabbitService notificationRabbitService;
   @Autowired
   private final MessageRepository messageRepository;
 
-  private User user;
-
-  private final String exchange;
-  //  private final User user;
   @Autowired
-  private UserRepository userRepository;
+  private UserService userService;
 
   public MessageService(NotificationRabbitService notificationRabbitService,
                         MessageRepository messageRepository,
-//                        User user,
                         @Value ("${rabbitmq.exchange.message.name}") String exchange
   ) {
     this.notificationRabbitService = notificationRabbitService;
     this.messageRepository = messageRepository;
     this.exchange = exchange;
-//    this.user = user;
-
   }
-
-  final static Logger logger = LoggerFactory.getLogger(MessageService.class);
 
   @Transactional
   public MessageResponseDto persist(MessageRequestDto messageRequestDto) {
-    String email, phone, name;
+    String email, userPhone, name;
 
     Message message = MapperMessages.INSTANCE.dtoToMessage(messageRequestDto);
-    phone = message.getPhone();
+
+
+    System.out.println(message);
+    userPhone = message.getPhone();
     name = message.getSender();
     email = message.getEmail();
-    logger.info(String.format(("name, email, phone, %s, %s, %s"), name, email, phone));
-    user = new User(name, email, phone);
-    System.out.println(user);
-//    Long id = user.getUser_id();
-    if (userRepository.existsById(user.getUser_id())) {
-      message.setUser(user);
-      messageRepository.save(message);
-    } else {
-      logger.info(String.format(("name, email, phone, %s, %s, %s"), name, email, phone));
-      message.setUser(user);
+
+    userService.saveUser(name, email,userPhone);
+
+//     user = new User(name, email, userPhone);
+    logger.info(String.format(("name, email, phone, %s, %s, %s"), name, email, userPhone));
+//    Long id = userService.getId(userPhone);
+//    message.setUserId(id);
+//    logger.info(String.format(("Id ->  %s"), id));
+    System.out.println(message);
+//    boolean isUser = userService.userExists(userPhone);
+//    if (isUser) {
+//      logger.info(String.format(("User Exists? %s"), isUser));
       try {
-        userRepository.save(user);
+//        Long id = userRepository.getUserId();
+//       logger.info(String.format(("User id found -> %s"), id));
         messageRepository.save(message);
-      } catch (EntityNotFoundException e) {
-        logger.info("Database error access");
-        logger.info("Value not returned!!!");
-        throw new DatabaseException("Error persisting data...");
+      } catch (DatabaseException dex) {
+        throw new DatabaseException("Error persisting Message Entity... User already exists..!");
       }
-    }
+//    } else {
+//      try {
+//        userService.persist(user);
+//        messageRepository.save(message);
+////    System.out.println(user);
+////      message.setUser(user);
+//        System.out.println(message);
+//      } catch (DatabaseException dbx) {
+//        throw new DatabaseException(("Error persisting User and Message Entities!"));
+//      }
 
-//    logger.info(String.format(("email, name, phone -  %s, %s, %s"), email, name, phone));
-//    message.setUser(new User(email,name, phone));
+//    }
+
+
     logger.info("User data inserted...");
-
+    logger.info("Let's start notifying the subscribers!");
     notifyRabbitMq(message);
 
     return MapperMessages.INSTANCE.messageToDto(message);
