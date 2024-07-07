@@ -17,7 +17,6 @@ public interface MapperMessages {
 
   MapperMessages INSTANCE = Mappers.getMapper(MapperMessages.class);
 
-
   @Mapping (target = "createdAt", ignore = true)
   @Mapping (target = "messageId", ignore = true)
   @Mapping (target = "userId", ignore = true)

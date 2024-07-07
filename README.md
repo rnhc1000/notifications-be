@@ -2,36 +2,48 @@
 This is how we faced the challenge of creating some microservices
 to consume notifications services.**
 ## _Table of contents_
-- [Challenge code - @Ricardo Ferreira])
-- [_Table of contents_](#table-of-contents)
+
 - [_Overview_](#overview)
+- [_Requirements_](#requirements)
 - [_Screenshot_](#screenshot)
 - [_Links_](#links)
 - [_Built with_](#built-with)
 - [_How I did it_](#how-i-did-it)
 - [_Continued development_](#continued-development)
-  - [_Useful resources_](#useful-resources)
+- [_Useful resources_](#useful-resources)
 - [_Author_](#author)
 - [Acknowledgments](#acknowledgments)
+
 ## _Overview_
-This notification app has been coded using Spring Boot, Spring JPA, Spring AWS SDK, MapStruct, Jackson,
-H2 DB.
-- src|
+This notification app has been coded using Spring Boot, Spring JPA, Spring AWS SDK, Spring RabbitMQ,MapStruct, Jackson,
+Lombok, OpenAPI, H2 DB.
+- src
     - main
-    - java|
-      - com/xxx/challenge/notification|
+    - java
+      - com/xxx/challenge/notification
         - config
+        - controller
         - dto
         - entity
+          - enums
         - mapper
         - payload
         - repository
         - services
-          - exceptions
-         
-        - resources
-          - db.migration
-      - test 
+          - exceptions 
+    - resources
+      - db.migration
+    - test 
+-
+
+_Requirements_
+  ```
+  - rabbitMQ running at 127.0.0.1:5672 socket
+  - H2 database classpath:data/notification
+  - profile active: dev
+  - service socket: 127.0.0.1:8095
+
+```
 
 ## _Screenshot_
 [![](./notification.png)]()
@@ -45,124 +57,51 @@ H2 DB.
 
  ## _How I did it_
 ```java
-package com.xxxx.challenge.notification.config;
-/*
- * Creating Queues  and Bindings
- */
+package com.gila.challenge.notification.entity.enums;
 
-import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+public enum MessageStatus {
+  
+  DELIVERED_SMS(1),
+  DELIVERED_EMAIL(2),
+  READY_TO_DELIVER(3),
+  WAITING_EXCHANGE(4);
 
-@Configuration
-public class RabbitMQConfiguration {
-  @Value ("${rabbitmq.queue.message.name}")
-  private String queueMessage;
+  private final int codeStatus;
 
-  @Value ("${rabbitmq.binding.message.routing.key}")
-  private String messageRoutingKey;
-
-  @Value ("${rabbitmq.exchange.message.name}")
-  private String exchangeMessage;
-
-  @Value ("${rabbitmq.queue.email.name}")
-  private String queueEmail;
-
-  @Value ("${rabbitmq.binding.email.routing.key}")
-  private String emailRoutingKey;
-
-  @Value ("${rabbitmq.queue.sns.name}")
-  private String queueSns;
-
-  @Value ("${rabbitmq.binding.sns.routing.key}")
-  private String snsRoutingKey;
-
-  @Bean
-  public Queue queueMessage() {
-    return new Queue(queueMessage);
+  private MessageStatus(int codeStatus) {
+    this.codeStatus = codeStatus;
   }
 
-  @Bean
-  public Queue queueEmail() {
-    return new Queue(queueEmail);
+  public int getCodeStatus() {
+    return codeStatus;
   }
 
-  @Bean
-  public Queue queueSns() {
-    return new Queue(queueSns);
-  }
+  public static MessageStatus valueOf(int codeStatus) {
+    for (MessageStatus value : MessageStatus.values()) {
+      if (value.getCodeStatus() == codeStatus) {
+        return value;
+      }
+    }
 
-  @Bean
-  public TopicExchange exchangeMessage() {
-    return ExchangeBuilder.topicExchange(exchangeMessage).build();
-  }
-
-  @Bean
-  public RabbitAdmin createRabbitAdmin(ConnectionFactory connectionFactory) {
-    return new RabbitAdmin(connectionFactory);
-  }
-
-  @Bean
-  public ApplicationListener<ApplicationReadyEvent> inicializarAdmin(RabbitAdmin rabbitAdmin) {
-    return event -> rabbitAdmin.initialize();
-  }
-
-  @Bean
-  public Binding messageBinding() {
-    return BindingBuilder
-            .bind(queueMessage())
-            .to(exchangeMessage())
-            .with(messageRoutingKey);
-  }
-
-  @Bean
-  public Binding emailBinding() {
-    return BindingBuilder
-            .bind(queueEmail())
-            .to(exchangeMessage())
-            .with(emailRoutingKey);
-  }
-
-  @Bean
-  public Binding snsBinding() {
-    return BindingBuilder
-            .bind(queueSns())
-            .to(exchangeMessage())
-            .with(snsRoutingKey);
-  }
-
-  @Bean
-  public MessageConverter messageConverter() {
-    return new Jackson2JsonMessageConverter();
-  }
-
-  @Bean
-  public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
-    RabbitTemplate rabbitTemplate = new RabbitTemplate();
-    rabbitTemplate.setConnectionFactory(connectionFactory);
-    rabbitTemplate.setMessageConverter(messageConverter());
-    return rabbitTemplate;
+    throw new IllegalArgumentException("Invalid MessageStatus code");
   }
 }
-
 ``` 
 
 ## _Continued development_
-- maybe....
+- Unit Tests
+- Provide a Json to FrontEnd including
+  - delivery status of each message to frontend
+  - count of messages consumed by subscriber
+- Subscriber Authentication
+  - Spring JWT-OAuth2 
+- Messages Pagination
+
 ### _Useful resources_
 - [https://spring.io] Awesome Java framework!.
 - [https://start.spring.io/]  Handy startup tool.
 - [https://mvnrepository.com] Tools that help tackle the beast
 ## _Author_
-- Website - [https://ferreiras.dev.br] 
-- 
+- Website - [https://ferreiras.dev.br]
 _Acknowledgments_
 - 
