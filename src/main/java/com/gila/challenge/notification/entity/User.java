@@ -1,42 +1,32 @@
 package com.gila.challenge.notification.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 
+@Getter
 @Entity
 @Table (name = "tb_users",
         uniqueConstraints = {
-                @UniqueConstraint (columnNames = "name"),
-                @UniqueConstraint (columnNames = "email"),
-                @UniqueConstraint (columnNames = "phone")
+
+                @UniqueConstraint (columnNames = "userPhone")
         })
-public class User {
-  public User(Long user_id, String name, String email, String phone) {
-    this.user_id = user_id;
-    this.userName = name;
-    this.userEmail = email;
-    this.userPhone = phone;
-  }
-
-  public User(String userName, String userEmail, String userPhone) {
-    this.userName = userName;
-    this.userEmail = userEmail;
-    this.userPhone = userPhone;
-  }
-
-  public User() {
-  }
-
+public class User implements Serializable {
+  private static final long serialVersionUUID = 1L;
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  private Long user_id;
+  @GeneratedValue (strategy = GenerationType.IDENTITY)
+  private Long userId;
 
   @NotBlank
-  @Column (unique = true)
-  @Size (min = 4, max = 20)
+  @Size (min = 4, max = 30)
   private String userName;
 
   @NotBlank
@@ -48,46 +38,74 @@ public class User {
   @Size (min = 6, max = 20)
   private String userPhone;
 
+  private Integer countMessages = 1;
 
-  public Long getUser_id() {
-    return user_id;
+  @JsonIgnore
+  @OneToMany
+  @JoinColumn(name = "user_id")
+  private List<Message> messages = new LinkedList<>();
+
+  public User(
+          Long userId,
+          String userName,
+          String userEmail,
+          String userPhone,
+          Integer countMessages
+  ) {
+    this.userId = userId;
+    this.userName = userName;
+    this.userEmail = userEmail;
+    this.userPhone = userPhone;
+    this.countMessages = countMessages;
   }
 
-  public void setUser_id(Long user_id) {
-    this.user_id = user_id;
+  public User(String userName, String userEmail, String userPhone, Integer countMessages) {
+    this.userName = userName;
+    this.userEmail = userEmail;
+    this.userPhone = userPhone;
+    this.countMessages = countMessages;
   }
 
-  public String getUserName() {
-    return userName;
+  public User(String userName, String userEmail, String userPhone) {
+    this.userName = userName;
+    this.userEmail = userEmail;
+    this.userPhone = userPhone;
+  }
+
+  public User() {
+  }
+
+  public User(Long id) {
+  }
+
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 
   public void setUserName(String userName) {
     this.userName = userName;
   }
 
-  public String getUserEmail() {
-    return userEmail;
-  }
-
   public void setUserEmail(String userEmail) {
     this.userEmail = userEmail;
-  }
-
-  public String getUserPhone() {
-    return userPhone;
   }
 
   public void setUserPhone(String userPhone) {
     this.userPhone = userPhone;
   }
 
+  public void setCountMessages(Integer countMessages) {
+    this.countMessages = countMessages;
+  }
+
   @Override
   public String toString() {
     return "User{" +
-            "user_id=" + user_id +
-            ", userName='" + userName + '\'' +
-            ", userEmail='" + userEmail + '\'' +
-            ", userPhone='" + userPhone + '\'' +
-            '}';
+           "userId=" + userId +
+           ", userName='" + userName + '\'' +
+           ", userEmail='" + userEmail + '\'' +
+           ", userPhone='" + userPhone + '\'' +
+           ", countMessages=" + countMessages +
+           '}';
   }
 }

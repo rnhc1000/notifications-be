@@ -20,4 +20,6 @@ public class MessageResponseDto implements Serializable {
   private String phone;
   private String email;
   private Instant createdAt;
+  private Integer status;
+
 }
