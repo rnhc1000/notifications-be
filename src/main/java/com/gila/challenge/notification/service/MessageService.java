@@ -1,22 +1,28 @@
 package com.gila.challenge.notification.service;
 
 import com.gila.challenge.notification.entity.Message;
-import com.gila.challenge.notification.entity.User;
 import com.gila.challenge.notification.mapper.MapperMessages;
 import com.gila.challenge.notification.payload.MessageRequestDto;
 import com.gila.challenge.notification.payload.MessageResponseDto;
 import com.gila.challenge.notification.repository.MessageRepository;
-import com.gila.challenge.notification.repository.UserRepository;
 import com.gila.challenge.notification.service.exceptions.DatabaseException;
 import com.gila.challenge.notification.service.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MessageService {
@@ -39,6 +45,7 @@ public class MessageService {
     this.exchange = exchange;
   }
 
+
   @Transactional
   public MessageResponseDto persist(MessageRequestDto messageRequestDto) {
     String email, userPhone, name;
@@ -51,7 +58,7 @@ public class MessageService {
     name = message.getSender();
     email = message.getEmail();
 
-    userService.saveUser(name, email,userPhone);
+    userService.saveUser(name, email, userPhone);
 
 //     user = new User(name, email, userPhone);
     logger.info(String.format(("name, email, phone, %s, %s, %s"), name, email, userPhone));
@@ -62,13 +69,13 @@ public class MessageService {
 //    boolean isUser = userService.userExists(userPhone);
 //    if (isUser) {
 //      logger.info(String.format(("User Exists? %s"), isUser));
-      try {
+    try {
 //        Long id = userRepository.getUserId();
 //       logger.info(String.format(("User id found -> %s"), id));
-        messageRepository.save(message);
-      } catch (DatabaseException dex) {
-        throw new DatabaseException("Error persisting Message Entity... User already exists..!");
-      }
+      messageRepository.save(message);
+    } catch (DatabaseException dex) {
+      throw new DatabaseException("Error persisting Message Entity... User already exists..!");
+    }
 //    } else {
 //      try {
 //        userService.persist(user);
@@ -117,4 +124,26 @@ public class MessageService {
     return MapperMessages.INSTANCE.messageToDto(message);
   }
 
+  @Transactional
+  public ResponseEntity<Map<String, Object>> getPagedMessages(int page, int size) {
+
+    try {
+      Iterable<Message> messages = new LinkedList<>();
+      Pageable paging = PageRequest.of(page, size);
+//      Message message = MapperMessages.INSTANCE.dtoToMessage(messageResponseDto);
+      Page<Message> pageMessages;
+      pageMessages = messageRepository.findAll(paging);
+      messages = pageMessages.getContent();
+
+      Map<String, Object> response = new HashMap<>();
+      response.put("messages", MapperMessages.INSTANCE.convertListEntityToListDto(messages));
+      response.put("currentPage", pageMessages.getNumber());
+      response.put("totalItems", pageMessages.getTotalElements());
+      response.put("totalPages", pageMessages.getTotalPages());
+      return new ResponseEntity<>(response, HttpStatus.OK);
+    } catch (Exception ex) {
+      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+  }
 }

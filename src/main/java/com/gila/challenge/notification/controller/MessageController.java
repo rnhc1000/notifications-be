@@ -1,8 +1,10 @@
 package com.gila.challenge.notification.controller;
 
+import com.gila.challenge.notification.entity.Message;
 import com.gila.challenge.notification.entity.User;
 import com.gila.challenge.notification.payload.MessageRequestDto;
 import com.gila.challenge.notification.payload.MessageResponseDto;
+import com.gila.challenge.notification.repository.MessageRepository;
 import com.gila.challenge.notification.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,18 +13,28 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.awt.print.Book;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MessageController {
 
   @Autowired
   private MessageService messageService;
+
+  @Autowired
+  private MessageRepository messageRepository;
 
 
   //  public String saveMessage(@RequestBody Message message) {
@@ -65,6 +77,14 @@ public class MessageController {
   public ResponseEntity<List<MessageResponseDto>> getMessage() {
 
     return ResponseEntity.ok(messageService.getMessage());
+  }
+
+  @GetMapping (value = "/messagesPaged")
+  public ResponseEntity<Map<String, Object>> getAllMessages(
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam(defaultValue = "10") int size
+  ) {
+   return messageService.getPagedMessages(page, size);
   }
 
   @Operation (summary = "Get a message by its id")
