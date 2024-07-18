@@ -1,18 +1,17 @@
 package com.gila.challenge.notification.payload;
 
 import com.gila.challenge.notification.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Data
 public class MessageResponseDto implements Serializable {
   private Long messageId;
   private String message;
@@ -22,4 +21,7 @@ public class MessageResponseDto implements Serializable {
   private Instant createdAt;
   private Integer status;
 
+  public Long getMessageId() {
+    return messageId;
+  }
 }

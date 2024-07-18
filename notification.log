@@ -1,0 +1,88 @@
+2024-07-18T00:13:20.204-03:00  INFO 328656 --- [notification challenge] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-18T00:13:20.217-03:00  INFO 328656 --- [notification challenge] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-18T00:13:20.224-03:00  INFO 328656 --- [notification challenge] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-18T00:13:30.136-03:00  INFO 329540 --- [notification challenge] [restartedMain] c.g.c.n.NotificationChallengeApplication : Starting NotificationChallengeApplication using Java 17.0.11 with PID 329540 (/home/rferreira/dev/notification/build/classes/java/main started by rferreira in /home/rferreira/dev/notification)
+2024-07-18T00:13:30.165-03:00  INFO 329540 --- [notification challenge] [restartedMain] c.g.c.n.NotificationChallengeApplication : The following 1 profile is active: "dev"
+2024-07-18T00:13:30.324-03:00  INFO 329540 --- [notification challenge] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-18T00:13:38.025-03:00  INFO 329540 --- [notification challenge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-18T00:13:38.165-03:00  INFO 329540 --- [notification challenge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 119 ms. Found 2 JPA repository interfaces.
+2024-07-18T00:13:42.926-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8095 (http)
+2024-07-18T00:13:42.960-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-18T00:13:42.964-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-18T00:13:43.078-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-18T00:13:43.080-03:00  INFO 329540 --- [notification challenge] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 12752 ms
+2024-07-18T00:13:43.551-03:00  INFO 329540 --- [notification challenge] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-18T00:13:44.221-03:00  INFO 329540 --- [notification challenge] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./data/notifications user=SA
+2024-07-18T00:13:44.224-03:00  INFO 329540 --- [notification challenge] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-18T00:13:44.253-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/notifications'
+2024-07-18T00:13:45.092-03:00  INFO 329540 --- [notification challenge] [restartedMain] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:file:./data/notifications (H2 2.2)
+2024-07-18T00:13:45.109-03:00  WARN 329540 --- [notification challenge] [restartedMain] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: H2 2.2.224 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.220.
+2024-07-18T00:13:45.201-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.073s)
+2024-07-18T00:13:45.264-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": 2
+2024-07-18T00:13:45.291-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.f.core.internal.command.DbMigrate      : Schema "PUBLIC" is up to date. No migration necessary.
+2024-07-18T00:13:45.624-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-18T00:13:45.801-03:00  INFO 329540 --- [notification challenge] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-07-18T00:13:45.933-03:00 DEBUG 329540 --- [notification challenge] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
+2024-07-18T00:13:45.936-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-18T00:13:46.804-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-18T00:13:51.532-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-18T00:13:51.572-03:00 DEBUG 329540 --- [notification challenge] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists tb_users 
+       drop constraint if exists UKkei9eex59i57mclsd87m9xt0
+2024-07-18T00:13:51.575-03:00 DEBUG 329540 --- [notification challenge] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists tb_users 
+       add constraint UKkei9eex59i57mclsd87m9xt0 unique (user_phone)
+2024-07-18T00:13:51.590-03:00  INFO 329540 --- [notification challenge] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-18T00:13:52.916-03:00 DEBUG 329540 --- [notification challenge] [restartedMain] o.h.stat.internal.StatisticsInitiator    : Statistics initialized [enabled=false]
+2024-07-18T00:13:53.314-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-18T00:13:54.506-03:00  INFO 329540 --- [notification challenge] [restartedMain] c.g.c.n.config.RabbitMQConfiguration     : RabbitMQ -> Creating Message Exchange and SNS, Email amd Message Queues...
+2024-07-18T00:13:55.001-03:00  WARN 329540 --- [notification challenge] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-18T00:13:56.382-03:00  INFO 329540 --- [notification challenge] [restartedMain] c.r.stream.impl.StreamEnvironment        : Connecting to localhost with guest user, assuming development environment
+2024-07-18T00:13:56.383-03:00  INFO 329540 --- [notification challenge] [restartedMain] c.r.stream.impl.StreamEnvironment        : Using address resolver to always connect to localhost
+2024-07-18T00:13:57.552-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-07-18T00:13:57.571-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-07-18T00:13:57.845-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8095 (http) with context path '/'
+2024-07-18T00:13:57.966-03:00  INFO 329540 --- [notification challenge] [restartedMain] c.g.c.n.NotificationChallengeApplication : Started NotificationChallengeApplication in 28.827 seconds (process running for 30.026)
+2024-07-18T00:13:58.149-03:00  INFO 329540 --- [notification challenge] [restartedMain] c.g.c.n.NotificationChallengeApplication : Message Notification backend started running at 2024-07-18T00:13:58.149242778, zone America/Sao_Paulo, running java version 17.0.11
+2024-07-18T00:13:58.166-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [localhost:5672]
+2024-07-18T00:13:58.379-03:00  INFO 329540 --- [notification challenge] [restartedMain] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#5bd00238:0/SimpleConnection@4ed1cb53 [delegate=amqp://guest@127.0.0.1:5672/, localPort=60426]
+2024-07-18T00:14:20.432-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-18T00:14:20.433-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-18T00:14:20.435-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-07-18T00:14:20.536-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-1] c.g.c.notification.service.LogsService   : Reading file...!
+2024-07-18T00:14:20.539-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-1] c.g.c.notification.service.LogsService   : Number of Log Entries-> , 52
+2024-07-18T00:15:02.272-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-5] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 1559 ms
+2024-07-18T00:15:08.969-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-6] c.g.c.notification.service.LogsService   : Reading file...!
+2024-07-18T00:15:08.970-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-6] c.g.c.notification.service.LogsService   : Number of Log Entries-> , 55
+2024-07-18T09:13:50.877-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-7] c.g.c.notification.service.LogsService   : Reading file...!
+2024-07-18T09:13:50.879-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-7] c.g.c.notification.service.LogsService   : Number of Log Entries-> , 57
+2024-07-18T09:13:56.022-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-8] c.g.c.n.service.MessageService           : Page Number -> , Size of Each Page -> , 0, 5
+2024-07-18T09:13:56.185-03:00 DEBUG 329540 --- [notification challenge] [http-nio-8095-exec-8] org.hibernate.SQL                        : 
+    select
+        m1_0.message_id,
+        m1_0.created_at,
+        m1_0.email,
+        m1_0.message,
+        m1_0.message_status,
+        m1_0.phone,
+        m1_0.sender,
+        m1_0.user_id 
+    from
+        tb_messages m1_0 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-07-18T09:13:56.241-03:00 DEBUG 329540 --- [notification challenge] [http-nio-8095-exec-8] org.hibernate.SQL                        : 
+    select
+        count(m1_0.message_id) 
+    from
+        tb_messages m1_0
+2024-07-18T09:14:05.162-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-10] c.g.c.notification.service.LogsService   : Reading file...!
+2024-07-18T09:14:05.165-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-10] c.g.c.notification.service.LogsService   : Number of Log Entries-> , 81
+2024-07-18T09:16:39.491-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-2] c.g.c.notification.service.LogsService   : Reading file...!
+2024-07-18T09:16:39.493-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-2] c.g.c.notification.service.LogsService   : Number of Log Entries-> , 83
+2024-07-18T09:16:43.945-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-3] c.g.c.notification.service.LogsService   : Reading file...!
+2024-07-18T09:16:43.947-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-3] c.g.c.notification.service.LogsService   : Number of Log Entries-> , 85
+2024-07-18T09:16:57.216-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-4] c.g.c.notification.service.LogsService   : Reading file...!
+2024-07-18T09:16:57.221-03:00  INFO 329540 --- [notification challenge] [http-nio-8095-exec-4] c.g.c.notification.service.LogsService   : Number of Log Entries-> , 87

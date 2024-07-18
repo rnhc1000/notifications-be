@@ -1,7 +1,5 @@
 package com.gila.challenge.notification.controller;
 
-import com.gila.challenge.notification.entity.Message;
-import com.gila.challenge.notification.entity.User;
 import com.gila.challenge.notification.payload.MessageRequestDto;
 import com.gila.challenge.notification.payload.MessageResponseDto;
 import com.gila.challenge.notification.repository.MessageRepository;
@@ -12,26 +10,24 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.awt.print.Book;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 public class MessageController {
 
+  public final static Logger logger = LoggerFactory.getLogger(MessageService.class);
+
   @Autowired
   private MessageService messageService;
+
 
   @Autowired
   private MessageRepository messageRepository;
@@ -79,11 +75,18 @@ public class MessageController {
     return ResponseEntity.ok(messageService.getMessage());
   }
 
-  @GetMapping (value = "/messagesPaged")
+  @Operation (summary = "Fetch 5 messages per page")
+  @ApiResponses (value = {
+          @ApiResponse (responseCode = "200", description = "Get up to 12 messages per page.",
+                  content = { @Content (mediaType = "application/json",
+                          schema = @Schema (implementation = MessageController.class)) })})
+  @ResponseStatus
+  @GetMapping (value = "/pagedMessages")
   public ResponseEntity<Map<String, Object>> getAllMessages(
           @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "10") int size
+          @RequestParam(defaultValue = "5") int size
   ) {
+    logger.info(String.format(("Page Number -> , Size of Each Page -> , %s, %s"), page, size));
    return messageService.getPagedMessages(page, size);
   }
 
@@ -104,5 +107,7 @@ public class MessageController {
 
     return ResponseEntity.ok(messageResponseDto);
   }
+
+
 
 }
