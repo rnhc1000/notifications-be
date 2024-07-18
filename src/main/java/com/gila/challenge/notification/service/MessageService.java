@@ -19,10 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class MessageService {
@@ -51,7 +48,6 @@ public class MessageService {
     String email, userPhone, name;
 
     Message message = MapperMessages.INSTANCE.dtoToMessage(messageRequestDto);
-
 
     System.out.println(message);
     userPhone = message.getPhone();
@@ -128,22 +124,22 @@ public class MessageService {
   public ResponseEntity<Map<String, Object>> getPagedMessages(int page, int size) {
 
     try {
-      Iterable<Message> messages = new LinkedList<>();
+
       Pageable paging = PageRequest.of(page, size);
-//      Message message = MapperMessages.INSTANCE.dtoToMessage(messageResponseDto);
       Page<Message> pageMessages;
       pageMessages = messageRepository.findAll(paging);
-      messages = pageMessages.getContent();
+      Iterable<Message> messages = pageMessages.getContent();
 
-      Map<String, Object> response = new HashMap<>();
+      Map<String, Object> response = new LinkedHashMap<>();
       response.put("messages", MapperMessages.INSTANCE.convertListEntityToListDto(messages));
       response.put("currentPage", pageMessages.getNumber());
       response.put("totalItems", pageMessages.getTotalElements());
       response.put("totalPages", pageMessages.getTotalPages());
+      response.put("size", pageMessages.getSize());
+      System.out.println(response);
       return new ResponseEntity<>(response, HttpStatus.OK);
-    } catch (Exception ex) {
+    } catch (DatabaseException ex) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
   }
 }

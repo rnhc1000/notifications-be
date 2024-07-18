@@ -1,14 +1,13 @@
 package com.gila.challenge.notification.dto;
 
 import com.gila.challenge.notification.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Message{
   private String message;
   private String name;
