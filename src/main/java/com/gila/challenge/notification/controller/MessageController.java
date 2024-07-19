@@ -28,7 +28,6 @@ public class MessageController {
   @Autowired
   private MessageService messageService;
 
-
   @Autowired
   private MessageRepository messageRepository;
 
@@ -107,7 +106,4 @@ public class MessageController {
 
     return ResponseEntity.ok(messageResponseDto);
   }
-
-
-
 }

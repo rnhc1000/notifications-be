@@ -9,8 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LogsService {
@@ -31,10 +33,10 @@ public class LogsService {
     return false;
   }
 
-  public List<String> readLogFile(String filePath, String fileName) {
+  public Map<Integer, String> readLogFile(String filePath, String fileName) {
 
-    List<String> logs = new LinkedList<>();
-
+//    List<String> logs = new LinkedList<>();
+    Map<Integer, String> map = new LinkedHashMap<>();
     String fileToBeProcessed = filePath.concat(fileName);
     Path file = Path.of(fileToBeProcessed);
     int count = 0;
@@ -43,7 +45,8 @@ public class LogsService {
       String line = null;
 
       while ((line = reader.readLine()) != null) {
-        logs.add(line);
+//        logs.add(line);
+        map.put(count, line);
         count++;
       }
     } catch (IOException x) {
@@ -51,6 +54,6 @@ public class LogsService {
       System.err.format("IOException: %s%n", x);
     }
     logger.info(String.format("Number of Log Entries-> , %d", count++));
-    return logs;
+    return map;
   }
 }

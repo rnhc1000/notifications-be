@@ -5,6 +5,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+logs/
+notification.log
 ### STS ###
 .apt_generated
 .classpath
@@ -32,6 +34,6 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
-
+*gz
 ### VS Code ###
 .vscode/
