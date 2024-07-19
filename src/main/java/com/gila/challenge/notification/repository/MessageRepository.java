@@ -9,5 +9,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
-
+  @Query (value = """
+           select messageId from Message m where m.messageId = :messageId
+          """)
+  Long getMessageId();
 }

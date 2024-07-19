@@ -13,4 +13,8 @@ public class MessageError {
   private Integer status;
   private String error;
   private String path;
+
+  public MessageError(Instant now, int value, String message, String requestURI) {
+
+  }
 }

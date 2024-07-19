@@ -10,12 +10,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 public class LogController {
@@ -29,11 +30,15 @@ public class LogController {
                   content = { @Content (mediaType = "application/json",
                           schema = @Schema (implementation = LogController.class)) })})
   @ResponseStatus
-  @GetMapping (value = "/logs")
-  public @ResponseBody List<String> getLogs() {
-    String filePath = "/home/rferreira/dev/notification/";
-    String fileName = "notification.log";
-
+  @RequestMapping (
+          method = RequestMethod.GET,
+          value = ("/logs"),
+          produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  @ResponseBody
+  public Map<Integer,String> fetchLogs() {
+    String filePath = "/home/rferreira/dev/notification/logs/";
+    String fileName = "spring-boot-logger-log4j2.log";
     return logsService.readLogFile(filePath, fileName);
   }
 }

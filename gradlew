@@ -121,7 +121,7 @@ if [ -n "$JAVA_HOME" ] ; then
         # IBM's JDK on AIX uses strange locations for the executables
         JAVACMD=$JAVA_HOME/jre/sh/java
     else
-        JAVACMD=$JAVA_HOME/bin/java
+        JAVACMD=/usr/lib/jvm/java-17-openjdk-amd64/bin/java
     fi
     if [ ! -x "$JAVACMD" ] ; then
         die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
