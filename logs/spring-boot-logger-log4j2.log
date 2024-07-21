@@ -1,109 +1,55 @@
-2024-07-18 23:24:06,229 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.1.Final
-2024-07-18 23:24:06,355 INFO o.s.b.StartupInfoLogger [restartedMain] Starting NotificationChallengeApplication using Java 17.0.11 with PID 468012 (/home/rferreira/dev/notification/build/classes/java/main started by rferreira in /home/rferreira/dev/notification)
-2024-07-18 23:24:06,374 INFO o.s.b.SpringApplication [restartedMain] The following 1 profile is active: "dev"
-2024-07-18 23:24:06,532 INFO o.s.b.l.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2024-07-18 23:24:10,065 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-07-18 23:24:10,223 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 138 ms. Found 2 JPA repository interfaces.
-2024-07-18 23:24:12,319 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port 8095 (http)
-2024-07-18 23:24:12,347 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8095"]
-2024-07-18 23:24:12,351 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting service [Tomcat]
-2024-07-18 23:24:12,352 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.25]
-2024-07-18 23:24:12,480 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
-2024-07-18 23:24:12,484 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 5946 ms
-2024-07-18 23:24:13,002 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
-2024-07-18 23:24:13,455 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./data/notifications user=SA
-2024-07-18 23:24:13,459 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
-2024-07-18 23:24:13,478 INFO o.s.b.a.h.H2ConsoleAutoConfiguration [restartedMain] H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/notifications'
-2024-07-18 23:24:14,304 INFO o.f.c.i.l.s.Slf4jLog [restartedMain] Database: jdbc:h2:file:./data/notifications (H2 2.2)
-2024-07-18 23:24:14,335 WARN o.f.c.i.l.s.Slf4jLog [restartedMain] Flyway upgrade recommended: H2 2.2.224 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.220.
-2024-07-18 23:24:14,421 INFO o.f.c.i.l.s.Slf4jLog [restartedMain] Successfully validated 2 migrations (execution time 00:00.061s)
-2024-07-18 23:24:14,443 INFO o.f.c.i.l.s.Slf4jLog [restartedMain] Current version of schema "PUBLIC": 2
-2024-07-18 23:24:14,450 INFO o.f.c.i.l.s.Slf4jLog [restartedMain] Schema "PUBLIC" is up to date. No migration necessary.
-2024-07-18 23:24:14,826 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-07-18 23:24:14,937 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 6.5.2.Final
-2024-07-18 23:24:15,020 DEBUG o.h.c.i.RegionFactoryInitiator [restartedMain] Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
-2024-07-18 23:24:15,022 INFO o.h.c.i.RegionFactoryInitiator [restartedMain] HHH000026: Second-level cache disabled
-2024-07-18 23:24:15,730 INFO o.s.o.j.p.SpringPersistenceUnitInfo [restartedMain] No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-07-18 23:24:18,247 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-07-18 23:24:18,320 DEBUG o.h.e.j.s.SqlStatementLogger [restartedMain] 
+2024-07-20 21:33:02,215 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.1.Final
+2024-07-20 21:33:02,315 INFO o.s.b.StartupInfoLogger [restartedMain] Starting NotificationChallengeApplication using Java 17.0.11 with PID 767374 (/home/rferreira/dev/notification/build/classes/java/main started by rferreira in /home/rferreira/dev/notification)
+2024-07-20 21:33:02,327 INFO o.s.b.SpringApplication [restartedMain] The following 1 profile is active: "dev"
+2024-07-20 21:33:02,456 INFO o.s.b.l.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-20 21:33:05,845 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-20 21:33:06,035 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 157 ms. Found 2 JPA repository interfaces.
+2024-07-20 21:33:08,178 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port 8095 (http)
+2024-07-20 21:33:08,211 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8095"]
+2024-07-20 21:33:08,222 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2024-07-20 21:33:08,226 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-20 21:33:08,352 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2024-07-20 21:33:08,357 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 5888 ms
+2024-07-20 21:33:08,807 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2024-07-20 21:33:09,357 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./data/notifications user=SA
+2024-07-20 21:33:09,372 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2024-07-20 21:33:09,398 INFO o.s.b.a.h.H2ConsoleAutoConfiguration [restartedMain] H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/notifications'
+2024-07-20 21:33:10,185 INFO o.f.c.i.l.s.Slf4jLog [restartedMain] Database: jdbc:h2:file:./data/notifications (H2 2.2)
+2024-07-20 21:33:10,203 WARN o.f.c.i.l.s.Slf4jLog [restartedMain] Flyway upgrade recommended: H2 2.2.224 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.220.
+2024-07-20 21:33:10,285 INFO o.f.c.i.l.s.Slf4jLog [restartedMain] Successfully validated 2 migrations (execution time 00:00.061s)
+2024-07-20 21:33:10,300 INFO o.f.c.i.l.s.Slf4jLog [restartedMain] Current version of schema "PUBLIC": 2
+2024-07-20 21:33:10,311 INFO o.f.c.i.l.s.Slf4jLog [restartedMain] Schema "PUBLIC" is up to date. No migration necessary.
+2024-07-20 21:33:10,670 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-20 21:33:10,821 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-07-20 21:33:10,910 DEBUG o.h.c.i.RegionFactoryInitiator [restartedMain] Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
+2024-07-20 21:33:10,912 INFO o.h.c.i.RegionFactoryInitiator [restartedMain] HHH000026: Second-level cache disabled
+2024-07-20 21:33:11,644 INFO o.s.o.j.p.SpringPersistenceUnitInfo [restartedMain] No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-20 21:33:13,928 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-20 21:33:13,984 DEBUG o.h.e.j.s.SqlStatementLogger [restartedMain] 
     alter table if exists tb_users 
        drop constraint if exists UKkei9eex59i57mclsd87m9xt0
-2024-07-18 23:24:18,324 DEBUG o.h.e.j.s.SqlStatementLogger [restartedMain] 
+2024-07-20 21:33:13,989 DEBUG o.h.e.j.s.SqlStatementLogger [restartedMain] 
     alter table if exists tb_users 
        add constraint UKkei9eex59i57mclsd87m9xt0 unique (user_phone)
-2024-07-18 23:24:18,354 INFO o.s.o.j.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-07-18 23:24:19,475 DEBUG o.h.s.i.StatisticsInitiator [restartedMain] Statistics initialized [enabled=false]
-2024-07-18 23:24:19,765 INFO o.s.d.j.r.q.QueryEnhancerFactory [restartedMain] Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-07-18 23:24:21,484 INFO c.g.c.n.c.RabbitMQConfiguration [restartedMain] RabbitMQ -> Creating Message Exchange and SNS, Email amd Message Queues...
-2024-07-18 23:24:21,967 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-07-18 23:24:23,681 INFO c.r.s.i.StreamEnvironment [restartedMain] Connecting to localhost with guest user, assuming development environment
-2024-07-18 23:24:23,681 INFO c.r.s.i.StreamEnvironment [restartedMain] Using address resolver to always connect to localhost
-2024-07-18 23:24:24,781 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
-2024-07-18 23:24:24,812 INFO o.s.b.a.e.w.EndpointLinksResolver [restartedMain] Exposing 1 endpoint beneath base path '/actuator'
-2024-07-18 23:24:24,984 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8095"]
-2024-07-18 23:24:25,026 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port 8095 (http) with context path '/'
-2024-07-18 23:24:25,131 INFO o.s.b.StartupInfoLogger [restartedMain] Started NotificationChallengeApplication in 20.223 seconds (process running for 22.224)
-2024-07-18 23:24:25,181 INFO c.g.c.n.NotificationChallengeApplication [restartedMain] Message Notification backend started running at 2024-07-18T23:24:25.181283167, zone America/Sao_Paulo, running java version 17.0.11
-2024-07-18 23:24:25,217 INFO o.s.a.r.c.AbstractConnectionFactory [restartedMain] Attempting to connect to: [localhost:5672]
-2024-07-18 23:24:25,380 INFO o.s.a.r.c.AbstractConnectionFactory [restartedMain] Created new connection: rabbitConnectionFactory#3e41355f:0/SimpleConnection@5cc1ed14 [delegate=amqp://guest@127.0.0.1:5672/, localPort=55730]
-2024-07-18 23:24:44,827 INFO o.a.j.l.DirectJDKLog [http-nio-8095-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-07-18 23:24:44,829 INFO o.s.w.s.FrameworkServlet [http-nio-8095-exec-1] Initializing Servlet 'dispatcherServlet'
-2024-07-18 23:24:44,835 INFO o.s.w.s.FrameworkServlet [http-nio-8095-exec-1] Completed initialization in 4 ms
-2024-07-18 23:24:44,925 INFO c.g.c.n.s.LogsService [http-nio-8095-exec-1] Reading file...!
-2024-07-18 23:24:44,927 INFO c.g.c.n.s.LogsService [http-nio-8095-exec-1] Number of Log Entries-> , 52
-2024-07-18 23:25:24,391 INFO c.g.c.n.c.MessageController [http-nio-8095-exec-2] Page Number -> , Size of Each Page -> , 0, 5
-2024-07-18 23:25:24,547 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-2] 
-    select
-        m1_0.message_id,
-        m1_0.created_at,
-        m1_0.email,
-        m1_0.message,
-        m1_0.message_status,
-        m1_0.phone,
-        m1_0.sender,
-        m1_0.user_id 
-    from
-        tb_messages m1_0 
-    offset
-        ? rows 
-    fetch
-        first ? rows only
-2024-07-18 23:25:24,615 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-2] 
-    select
-        count(m1_0.message_id) 
-    from
-        tb_messages m1_0
-2024-07-18 23:25:40,244 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-3] 
-    insert 
-    into
-        tb_users
-        (count_messages, user_email, user_name, user_phone, user_id) 
-    values
-        (?, ?, ?, ?, default)
-2024-07-18 23:25:40,256 INFO o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-3] Slow query took 2 milliseconds [insert into tb_users (count_messages,user_email,user_name,user_phone,user_id) values (?,?,?,?,default)]
-2024-07-18 23:25:40,273 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-3] name, email, phone, Ricardo Ferreira, ricardo@ferreiras.dev.br, +00757575757575
-2024-07-18 23:25:40,276 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-3] 
-    insert 
-    into
-        tb_messages
-        (created_at, email, message, message_status, phone, sender, user_id, message_id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, default)
-2024-07-18 23:25:40,280 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-3] User data inserted...
-2024-07-18 23:25:40,280 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-3] Let's start notifying the subscribers!
-2024-07-18 23:26:41,921 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-6] 
-    select
-        m1_0.message_id,
-        m1_0.created_at,
-        m1_0.email,
-        m1_0.message,
-        m1_0.message_status,
-        m1_0.phone,
-        m1_0.sender,
-        m1_0.user_id 
-    from
-        tb_messages m1_0
-2024-07-18 23:26:52,622 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-7] 
+2024-07-20 21:33:14,014 INFO o.s.o.j.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-20 21:33:15,212 DEBUG o.h.s.i.StatisticsInitiator [restartedMain] Statistics initialized [enabled=false]
+2024-07-20 21:33:15,689 INFO o.s.d.j.r.q.QueryEnhancerFactory [restartedMain] Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-20 21:33:17,174 INFO c.g.c.n.c.RabbitMQConfiguration [restartedMain] RabbitMQ -> Creating Message Exchange and SNS, Email amd Message Queues...
+2024-07-20 21:33:17,683 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-20 21:33:19,485 INFO c.r.s.i.StreamEnvironment [restartedMain] Connecting to localhost with guest user, assuming development environment
+2024-07-20 21:33:19,486 INFO c.r.s.i.StreamEnvironment [restartedMain] Using address resolver to always connect to localhost
+2024-07-20 21:33:20,794 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2024-07-20 21:33:20,831 INFO o.s.b.a.e.w.EndpointLinksResolver [restartedMain] Exposing 1 endpoint beneath base path '/actuator'
+2024-07-20 21:33:21,148 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8095"]
+2024-07-20 21:33:21,179 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port 8095 (http) with context path '/'
+2024-07-20 21:33:21,209 INFO o.s.b.StartupInfoLogger [restartedMain] Started NotificationChallengeApplication in 19.929 seconds (process running for 22.334)
+2024-07-20 21:33:21,227 INFO c.g.c.n.NotificationChallengeApplication [restartedMain] Message Notification backend started running at 2024-07-20T21:33:21.227308273, zone America/Sao_Paulo, running java version 17.0.11
+2024-07-20 21:33:21,242 INFO o.s.a.r.c.AbstractConnectionFactory [restartedMain] Attempting to connect to: [localhost:5672]
+2024-07-20 21:33:21,328 INFO o.s.a.r.c.AbstractConnectionFactory [restartedMain] Created new connection: rabbitConnectionFactory#541aea2a:0/SimpleConnection@73ffb0f7 [delegate=amqp://guest@127.0.0.1:5672/, localPort=57290]
+2024-07-20 21:35:20,778 INFO o.a.j.l.DirectJDKLog [http-nio-8095-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-20 21:35:20,779 INFO o.s.w.s.FrameworkServlet [http-nio-8095-exec-1] Initializing Servlet 'dispatcherServlet'
+2024-07-20 21:35:20,803 INFO o.s.w.s.FrameworkServlet [http-nio-8095-exec-1] Completed initialization in 21 ms
+2024-07-20 21:35:21,000 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-1] 
     select
         m1_0.message_id,
         m1_0.created_at,
@@ -124,8 +70,8 @@
             on ui1_0.user_id=m1_0.user_id 
     where
         m1_0.message_id=?
-2024-07-18 23:27:01,292 INFO c.g.c.n.c.MessageController [http-nio-8095-exec-8] Page Number -> , Size of Each Page -> , 0, 5
-2024-07-18 23:27:01,295 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-8] 
+2024-07-20 21:35:21,016 INFO o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-1] Slow query took 9 milliseconds [select m1_0.message_id,m1_0.created_at,m1_0.email,m1_0.message,m1_0.message_status,m1_0.phone,m1_0.sender,ui1_0.user_id,ui1_0.count_messages,ui1_0.user_email,ui1_0.user_name,ui1_0.user_phone from tb_messages m1_0 left join tb_users ui1_0 on ui1_0.user_id=m1_0.user_id where m1_0.message_id=?]
+2024-07-20 21:40:05,182 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-2] 
     select
         m1_0.message_id,
         m1_0.created_at,
@@ -134,15 +80,15 @@
         m1_0.message_status,
         m1_0.phone,
         m1_0.sender,
-        m1_0.user_id 
+        ui1_0.user_id,
+        ui1_0.count_messages,
+        ui1_0.user_email,
+        ui1_0.user_name,
+        ui1_0.user_phone 
     from
         tb_messages m1_0 
-    offset
-        ? rows 
-    fetch
-        first ? rows only
-2024-07-18 23:27:01,301 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-8] 
-    select
-        count(m1_0.message_id) 
-    from
-        tb_messages m1_0
+    left join
+        tb_users ui1_0 
+            on ui1_0.user_id=m1_0.user_id 
+    where
+        m1_0.message_id=?
