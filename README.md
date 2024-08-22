@@ -1,24 +1,24 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      **## Take-home Microservices Challenge
+                                                                                                                                         **## Microservices Challenge
 
 This is how we faced the challenge of creating some microservices
 to consume notifications services.**
 
 ## _Table of contents_
 
+- [_Table of contents_](#table-of-contents)
 - [_Overview_](#overview)
-- [_Requirements_](#requirements)
 - [_Screenshot_](#screenshot)
 - [_Links_](#links)
 - [_Built with_](#built-with)
 - [_How I did it_](#how-i-did-it)
 - [_Continued development_](#continued-development)
-- [_Useful resources_](#useful-resources)
+  - [_Useful resources_](#useful-resources)
 - [_Author_](#author)
-- [Acknowledgments](#acknowledgments)
+- [_Acknowledgments_](#acknowledgments)
 
 ## _Overview_
 
-This notification app has been coded using Spring Boot, Spring JPA, Spring AWS SDK, Spring RabbitMQ,MapStruct, Jackson,
+This notification app has been coded using Spring Boot, Spring JPA, Spring AWS SDK, Spring RabbitMQ, MapStruct, Jackson,
 Lombok, OpenAPI, H2 DB.
 
 - src
@@ -60,12 +60,12 @@ _Requirements_
 
 ## _Built with_
 
-[![My Skills](https://skillicons.dev/icons?i=java,spring,redhat,aws,idea,git,github)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=java,spring,redhat,aws,idea,git,github,rabbitmq)](https://skillicons.dev)
 
 ## _How I did it_
 
 ```java
-package com.gila.challenge.notification.entity.enums;
+package com.challenge.notification.entity.enums;
 
 public enum MessageStatus {
 

@@ -28,6 +28,7 @@ public class MessageController {
   @Autowired
   private MessageService messageService;
 
+
   @Autowired
   private MessageRepository messageRepository;
 
@@ -46,8 +47,8 @@ public class MessageController {
   @Operation (summary = "Post a messages")
   @ApiResponses (value = {
           @ApiResponse (responseCode = "201", description = "Message Created.",
-                  content = { @Content (mediaType = "application/json",
-                          schema = @Schema (implementation = MessageController.class)) })})
+                  content = {@Content (mediaType = "application/json",
+                          schema = @Schema (implementation = MessageController.class))})})
   @ResponseStatus
   @PostMapping (value = "/messages")
   public ResponseEntity persistMessage(@RequestBody MessageRequestDto messageRequestDto) {
@@ -55,18 +56,18 @@ public class MessageController {
     MessageResponseDto messageResponseDto = messageService.persist(messageRequestDto);
 
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{messageId}")
-            .buildAndExpand(messageResponseDto.getMessageId())
-            .toUri()
-    ).body(messageResponseDto);
+                                                             .path("/{messageId}")
+                                                             .buildAndExpand(messageResponseDto.getMessageId())
+                                                             .toUri())
+                         .body(messageResponseDto);
 
   }
 
   @Operation (summary = "Fetch all messages available")
   @ApiResponses (value = {
           @ApiResponse (responseCode = "200", description = "Get all messages, even none.",
-                  content = { @Content (mediaType = "application/json",
-                          schema = @Schema (implementation = MessageController.class)) })})
+                  content = {@Content (mediaType = "application/json",
+                          schema = @Schema (implementation = MessageController.class))})})
   @ResponseStatus
   @GetMapping (value = "/messages")
   public ResponseEntity<List<MessageResponseDto>> getMessage() {
@@ -77,27 +78,27 @@ public class MessageController {
   @Operation (summary = "Fetch 5 messages per page")
   @ApiResponses (value = {
           @ApiResponse (responseCode = "200", description = "Get up to 12 messages per page.",
-                  content = { @Content (mediaType = "application/json",
-                          schema = @Schema (implementation = MessageController.class)) })})
+                  content = {@Content (mediaType = "application/json",
+                          schema = @Schema (implementation = MessageController.class))})})
   @ResponseStatus
   @GetMapping (value = "/pagedMessages")
   public ResponseEntity<Map<String, Object>> getAllMessages(
-          @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "5") int size
+          @RequestParam (defaultValue = "0") int page,
+          @RequestParam (defaultValue = "5") int size
   ) {
     logger.info(String.format(("Page Number -> , Size of Each Page -> , %s, %s"), page, size));
-   return messageService.getPagedMessages(page, size);
+    return messageService.getPagedMessages(page, size);
   }
 
   @Operation (summary = "Get a message by its id")
   @ApiResponses (value = {
           @ApiResponse (responseCode = "200", description = "Got the message requested by its id",
-                  content = { @Content (mediaType = "application/json",
-                          schema = @Schema (implementation = MessageController.class)) }),
-          @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+                  content = {@Content (mediaType = "application/json",
+                          schema = @Schema (implementation = MessageController.class))}),
+          @ApiResponse (responseCode = "400", description = "Invalid id supplied",
                   content = @Content),
-          @ApiResponse(responseCode = "404", description = "Message not found",
-                  content = @Content) })
+          @ApiResponse (responseCode = "404", description = "Message not found",
+                  content = @Content)})
   @ResponseStatus
   @GetMapping (value = "/messages/{messageId}")
   public ResponseEntity<MessageResponseDto> findById(@Parameter (description = "message id to be fetched") @PathVariable Long messageId) {
