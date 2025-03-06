@@ -23,7 +23,7 @@ import java.util.Map;
 @RestController
 public class MessageController {
 
-  public final static Logger logger = LoggerFactory.getLogger(MessageService.class);
+  public final static Logger logger = LoggerFactory.getLogger(MessageController.class);
 
   @Autowired
   private MessageService messageService;
