@@ -7,6 +7,7 @@ public record MessageResponseDto(
         String sender, String phone,
         String email, Instant createdAt,
         Integer status) {
+
   public Long getMessageId() {
     return messageId;
   }

@@ -138,8 +138,10 @@ public class MessageService {
       response.put("totalPages", pageMessages.getTotalPages());
       response.put("size", pageMessages.getSize());
       System.out.println(response);
+
       return new ResponseEntity<>(response, HttpStatus.OK);
     } catch (DatabaseException ex) {
+
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
