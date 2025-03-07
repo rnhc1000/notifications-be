@@ -9,7 +9,6 @@ import com.gila.challenge.notification.service.exceptions.DatabaseException;
 import com.gila.challenge.notification.service.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,32 +24,35 @@ import java.util.Map;
 
 @Service
 public class MessageService {
-  final static Logger logger = LoggerFactory.getLogger(MessageService.class);
-  private final String exchange;
-  @Autowired
-  private final NotificationRabbitService notificationRabbitService;
-  @Autowired
-  private final MessageRepository messageRepository;
 
-  @Autowired
-  private UserService userService;
+  private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
+
+
+  private final NotificationRabbitService notificationRabbitService;
+  private final MessageRepository messageRepository;
+  private final String exchange;
+  private final UserService userService;
 
   public MessageService(NotificationRabbitService notificationRabbitService,
                         MessageRepository messageRepository,
-                        @Value ("${rabbitmq.exchange.message.name}") String exchange
+                        @Value("${rabbitmq.exchange.message.name}") String exchange, UserService userService
   ) {
     this.notificationRabbitService = notificationRabbitService;
     this.messageRepository = messageRepository;
     this.exchange = exchange;
+    this.userService = userService;
   }
 
   @Transactional
   public MessageResponseDto persist(MessageRequestDto messageRequestDto) {
-    String email, userPhone, name;
+    String email;
+    String userPhone;
+    String name;
 
     Message message = MapperMessages.INSTANCE.dtoToMessage(messageRequestDto);
 
-    System.out.println(message);
+    logger.info("::: Message -> {} :::", message);
+
     userPhone = message.getPhone();
     name = message.getSender();
     email = message.getEmail();
@@ -58,11 +60,11 @@ public class MessageService {
     userService.saveUser(name, email, userPhone);
 
 //     user = new User(name, email, userPhone);
-    logger.info(String.format(("name, email, phone, %s, %s, %s"), name, email, userPhone));
+    logger.info("::: name, email, phone, {}, {}, {} :::", name, email, userPhone);
 //    Long id = userService.getId(userPhone);
 //    message.setUserId(id);
 //    logger.info(String.format(("Id ->  %s"), id));
-    System.out.println(message);
+    logger.info("::: message: -> {} :::", message);
 //    boolean isUser = userService.userExists(userPhone);
 //    if (isUser) {
 //      logger.info(String.format(("User Exists? %s"), isUser));
@@ -87,8 +89,8 @@ public class MessageService {
 //    }
 
 
-    logger.info("User data inserted...");
-    logger.info("Let's start notifying the subscribers!");
+    logger.info("::: User data inserted... :::");
+    logger.info("::: Let's start notifying the subscribers! :::");
     notifyRabbitMq(message);
 
     return MapperMessages.INSTANCE.messageToDto(message);
@@ -100,24 +102,23 @@ public class MessageService {
 //  }
   private void notifyRabbitMq(Message message) {
 
-
     notificationRabbitService.notify(message, "message.routingKey", exchange);
-
   }
 
-  @Transactional (readOnly = true)
+  @Transactional(readOnly = true)
   public List<MessageResponseDto> getMessage() {
 
     Iterable<Message> messages = messageRepository.findAll();
-    return MapperMessages.INSTANCE.convertListEntityToListDto(messages);
 
+    return MapperMessages.INSTANCE.convertListEntityToListDto(messages);
   }
 
-  @Transactional (readOnly = true)
+  @Transactional(readOnly = true)
   public MessageResponseDto getMessageById(Long messageId) {
 
     Message message = messageRepository.findById(messageId).orElseThrow(
-            () -> new ResourceNotFoundException("Resource not found!"));
+        () -> new ResourceNotFoundException("Resource not found!"));
+
     return MapperMessages.INSTANCE.messageToDto(message);
   }
 
@@ -137,7 +138,7 @@ public class MessageService {
       response.put("totalItems", pageMessages.getTotalElements());
       response.put("totalPages", pageMessages.getTotalPages());
       response.put("size", pageMessages.getSize());
-      System.out.println(response);
+      logger.info("::: Response: -> {} :::", response);
 
       return new ResponseEntity<>(response, HttpStatus.OK);
     } catch (DatabaseException ex) {

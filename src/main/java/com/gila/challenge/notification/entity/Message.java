@@ -7,24 +7,21 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.io.Serializable;
 import java.time.Instant;
 
 @Getter
 @Entity
-@Table (name = "tb_messages")
-public class Message implements Serializable {
-
-  private static final long serialVersionUUID = 1L;
+@Table(name = "tb_messages")
+public class Message {
 
   @Getter
   @Id
-  @GeneratedValue (strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long messageId;
 
   @Getter
   @NotNull
-  @Size (min = 1, max = 160)
+  @Size(min = 1, max = 160)
   private String message;
 
   @Getter
@@ -43,15 +40,15 @@ public class Message implements Serializable {
   private Integer messageStatus = MessageStatus.READY_TO_DELIVER.getCodeStatus();
 
   @Getter
-  @ManyToOne (cascade = CascadeType.ALL)
-  @JoinColumn (name = "user_id")
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "user_id")
   private User userId;
 
   public Message(
-          Long messageId, String message,
-          String sender, String phone,
-          User userId, String email,
-          MessageStatus messageStatus, Instant createdAt) {
+      Long messageId, String message,
+      String sender, String phone,
+      User userId, String email,
+      MessageStatus messageStatus, Instant createdAt) {
     this.messageId = messageId;
     this.message = message;
     this.sender = sender;
