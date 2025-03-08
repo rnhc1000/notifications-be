@@ -27,7 +27,6 @@ public class MessageService {
 
   private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
-
   private final NotificationRabbitService notificationRabbitService;
   private final MessageRepository messageRepository;
   private final String exchange;
@@ -59,35 +58,15 @@ public class MessageService {
 
     userService.saveUser(name, email, userPhone);
 
-//     user = new User(name, email, userPhone);
     logger.info("::: name, email, phone, {}, {}, {} :::", name, email, userPhone);
-//    Long id = userService.getId(userPhone);
-//    message.setUserId(id);
-//    logger.info(String.format(("Id ->  %s"), id));
+
     logger.info("::: message: -> {} :::", message);
-//    boolean isUser = userService.userExists(userPhone);
-//    if (isUser) {
-//      logger.info(String.format(("User Exists? %s"), isUser));
+
     try {
-//        Long id = userRepository.getUserId();
-//       logger.info(String.format(("User id found -> %s"), id));
       messageRepository.save(message);
     } catch (DatabaseException dex) {
       throw new DatabaseException("Error persisting Message Entity... User already exists..!");
     }
-//    } else {
-//      try {
-//        userService.persist(user);
-//        messageRepository.save(message);
-////    System.out.println(user);
-////      message.setUser(user);
-//        System.out.println(message);
-//      } catch (DatabaseException dbx) {
-//        throw new DatabaseException(("Error persisting User and Message Entities!"));
-//      }
-
-//    }
-
 
     logger.info("::: User data inserted... :::");
     logger.info("::: Let's start notifying the subscribers! :::");
@@ -96,10 +75,6 @@ public class MessageService {
     return MapperMessages.INSTANCE.messageToDto(message);
   }
 
-  //  @Transactional
-//  public User recoverUserId(User user) {
-//    return userRepository.findById(user.getUser_id());
-//  }
   private void notifyRabbitMq(Message message) {
 
     notificationRabbitService.notify(message, "message.routingKey", exchange);

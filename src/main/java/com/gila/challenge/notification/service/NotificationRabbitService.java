@@ -1,9 +1,8 @@
 package com.gila.challenge.notification.service;
 
-import com.gila.challenge.notification.dto.MessageEvent;
 import com.gila.challenge.notification.entity.Message;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,9 +14,15 @@ public class NotificationRabbitService {
     this.rabbitTemplate = rabbitTemplate;
   }
 
-  public void notify(Message message, String routingKey, String exchange ) {
+  public void notify(Message message, String routingKey, String exchange) {
 
-    rabbitTemplate.convertAndSend(exchange,routingKey, message);
+    try {
+      rabbitTemplate.convertAndSend(exchange, routingKey, message);
+    } catch (RuntimeException ex) {
+
+      throw new AmqpException(ex.getMessage());
+
+    }
   }
 
 }
