@@ -21,7 +21,6 @@ public class NotificationRabbitService {
     } catch (RuntimeException ex) {
 
       throw new AmqpException(ex.getMessage());
-
     }
   }
 

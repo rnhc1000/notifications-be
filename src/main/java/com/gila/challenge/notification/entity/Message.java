@@ -2,7 +2,6 @@ package com.gila.challenge.notification.entity;
 
 import com.gila.challenge.notification.entity.enums.MessageStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,9 +22,8 @@ public class Message {
 
   @Setter
   @Getter
-  @NotNull
   @Size(min = 1, max = 160)
-  private String message;
+  private String messages;
 
   @Setter
   @Getter
@@ -53,12 +51,12 @@ public class Message {
   private User user;
 
   public Message(
-      Long messageId, String message,
+      Long messageId, String messages,
       String sender, String phone,
       String email,
       MessageStatus messageStatus, Instant createdAt) {
     this.messageId = messageId;
-    this.message = message;
+    this.messages = messages;
     this.sender = sender;
     this.phone = phone;
     this.email = email;
@@ -84,7 +82,7 @@ public class Message {
   public String toString() {
     return "Message{" +
            "messageId=" + messageId +
-           ", message='" + message + '\'' +
+           ", messages='" + messages + '\'' +
            ", sender='" + sender + '\'' +
            ", phone='" + phone + '\'' +
            ", email='" + email + '\'' +

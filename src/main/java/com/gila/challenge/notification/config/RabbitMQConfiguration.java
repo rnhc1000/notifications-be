@@ -21,13 +21,13 @@ public class RabbitMQConfiguration {
 
   private static final Logger logger = LoggerFactory.getLogger(RabbitMQConfiguration.class);
 
-  @Value("${rabbitmq.queue.message.name}")
+  @Value("${rabbitmq.queue.messages.name}")
   private String queueMessage;
 
-  @Value("${rabbitmq.binding.message.routing.key}")
+  @Value("${rabbitmq.binding.messages.routing.key}")
   private String messageRoutingKey;
 
-  @Value("${rabbitmq.exchange.message.name}")
+  @Value("${rabbitmq.exchange.messages.name}")
   private String exchangeMessage;
 
   @Value("${rabbitmq.queue.email.name}")

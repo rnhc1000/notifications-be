@@ -2,7 +2,6 @@ package com.gila.challenge.notification.controller;
 
 import com.gila.challenge.notification.payload.MessageRequestDto;
 import com.gila.challenge.notification.payload.MessageResponseDto;
-import com.gila.challenge.notification.repository.MessageRepository;
 import com.gila.challenge.notification.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,12 +11,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class MessageController {
@@ -26,33 +26,20 @@ public class MessageController {
 
   private final MessageService messageService;
 
-  private final MessageRepository messageRepository;
-
-  public MessageController(MessageService messageService, MessageRepository messageRepository) {
+  public MessageController(MessageService messageService) {
     this.messageService = messageService;
-    this.messageRepository = messageRepository;
   }
 
-
-  //  public String saveMessage(@RequestBody Message message) {
-//    message.setMessageId(UUID.randomUUID().toString());
-//    MessageEvent event = new MessageEvent();
-//    event.setName("Ricardo Ferreira");
-//    event.setEmail("ricardo@ferreiras.dev.br");
-//    event.setPhone("+5571993005555");
-//    event.setAdvice("The message is about to be consumed...");
-//    event.setMessage(message);
-//    messageService.forwardMessage(event);
-//    return "Message sent to RabbitMQ!";
-//  }
-  @Operation(summary = "Post a messages")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "Message Created.",
-          content = {@Content(mediaType = "application/json",
-              schema = @Schema(implementation = MessageRequestDto.class))})})
-  @ResponseStatus
-  @PostMapping(value = "/messages")
+  @Operation(summary = "Post a messages",
+      responses = {
+          @ApiResponse(responseCode = "201", description = "Message Created.",
+              content = {@Content(mediaType = "application/json",
+                  schema = @Schema(implementation = MessageRequestDto.class))})
+      })
+  @PostMapping("/messages")
   public ResponseEntity<MessageResponseDto> persistMessage(@RequestBody MessageRequestDto messageRequestDto) {
+
+    logger.info("::: MessageRequestDTo@controller: {} :::", messageRequestDto);
 
     MessageResponseDto messageResponseDto = messageService.persist(messageRequestDto);
 
@@ -63,36 +50,42 @@ public class MessageController {
         .body(messageResponseDto);
   }
 
-  @Operation(summary = "Fetch all messages available")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Get all messages, even none.",
-          content = {@Content(mediaType = "application/json",
-              schema = @Schema(implementation = MessageController.class))})})
-  @ResponseStatus
+
+  @Operation(summary = "Fetch all messages available",
+      responses = {
+          @ApiResponse(responseCode = "200", description = "Get all messages, even none.",
+              content = {@Content(mediaType = "application/json",
+                  schema = @Schema(implementation = MessageController.class))})
+      })
   @GetMapping(value = "/messages")
   public ResponseEntity<List<MessageResponseDto>> getMessage() {
 
     return ResponseEntity.ok(messageService.getMessage());
   }
 
-  @Operation(summary = "Fetch 12 messages per page")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Get up to 12 messages per page.",
-          content = {@Content(mediaType = "application/json",
-              schema = @Schema(implementation = MessageController.class))})})
-  @ResponseStatus
+  @Operation(summary = "Fetch 5 messages per page",
+      description = "Fetch paginated messages",
+      responses = {
+          @ApiResponse(responseCode = "200",
+              content = {@Content(mediaType = "application/json",
+                  schema = @Schema(implementation = MessageController.class))})
+      })
   @GetMapping(value = "/pagedMessages")
-  public ResponseEntity<Map<String, Object>> getAllMessages(
+  public ResponseEntity<Page<MessageResponseDto>> getAllMessages(
       @RequestParam(defaultValue = "0") int page,
-      @RequestParam(defaultValue = "5") int size
+      @RequestParam(defaultValue = "4") int size,
+      Pageable pageable
   ) {
-    logger.info(String.format(("Page Number -> , Size of Each Page -> , %s, %s"), page, size));
-    return messageService.getPagedMessages(page, size);
+    logger.info(" ::: Page Number -> , Size of Each Page -> ,{}, {}", page, size);
+
+    Page<MessageResponseDto> dto = messageService.getPagedMessages(page, size, pageable);
+
+    return ResponseEntity.ok(dto);
   }
 
-  @Operation(summary = "Get a message by its id")
+  @Operation(summary = "Get a messages by its id")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Got the message requested by its id",
+      @ApiResponse(responseCode = "200", description = "Got the messages requested by its id",
           content = {@Content(mediaType = "application/json",
               schema = @Schema(implementation = MessageController.class))}),
       @ApiResponse(responseCode = "400", description = "Invalid id supplied",
@@ -101,7 +94,7 @@ public class MessageController {
           content = @Content)})
   @ResponseStatus
   @GetMapping(value = "/messages/{messageId}")
-  public ResponseEntity<MessageResponseDto> findById(@Parameter(description = "message id to be fetched") @PathVariable Long messageId) {
+  public ResponseEntity<MessageResponseDto> findById(@Parameter(description = "messages id to be fetched") @PathVariable Long messageId) {
 
     MessageResponseDto messageResponseDto = messageService.getMessageById(messageId);
 

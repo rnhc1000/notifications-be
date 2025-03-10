@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 public class MessageProducer {
   private final Logger logger = LoggerFactory.getLogger(MessageProducer.class);
 
-  @Value("${rabbitmq.exchange.message.name}")
+  @Value("${rabbitmq.exchange.messages.name}")
   private String exchange;
 
-  @Value("${rabbitmq.binding.message.routing.key}")
+  @Value("${rabbitmq.binding.messages.routing.key}")
   private String messageRoutingKey;
 
   @Value("${rabbitmq.binding.email.routing.key}")
