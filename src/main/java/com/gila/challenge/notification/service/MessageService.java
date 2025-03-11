@@ -1,9 +1,11 @@
 package com.gila.challenge.notification.service;
 
+import com.gila.challenge.notification.dto.MessageEvent;
 import com.gila.challenge.notification.entity.Message;
 import com.gila.challenge.notification.entity.enums.MessageStatus;
 import com.gila.challenge.notification.payload.MessageRequestDto;
 import com.gila.challenge.notification.payload.MessageResponseDto;
+import com.gila.challenge.notification.publisher.MessageProducer;
 import com.gila.challenge.notification.repository.MessageRepository;
 import com.gila.challenge.notification.service.exceptions.DatabaseException;
 import com.gila.challenge.notification.service.exceptions.ResourceNotFoundException;
@@ -21,81 +23,86 @@ import java.util.List;
 @Service
 public class MessageService {
 
-  private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
-  private final NotificationRabbitService notificationRabbitService;
-  private final MessageRepository messageRepository;
-  private final String exchange;
-  private final UserService userService;
+    private final MessageRepository messageRepository;
+    private final String exchange;
+    private final UserService userService;
+    private final MessageProducer messageProducer;
 
-  public MessageService(NotificationRabbitService notificationRabbitService,
-                        MessageRepository messageRepository,
-                        @Value("${rabbitmq.exchange.messages.name}") String exchange, UserService userService
-  ) {
-    this.notificationRabbitService = notificationRabbitService;
-    this.messageRepository = messageRepository;
-    this.exchange = exchange;
-    this.userService = userService;
-  }
+    public MessageService(MessageRepository messageRepository,
+                          @Value("${rabbitmq.exchange.messages.name}") String exchange,
+                          UserService userService,
+                          MessageProducer messageProducer
+    ) {
+        this.messageRepository = messageRepository;
+        this.exchange = exchange;
+        this.userService = userService;
+        this.messageProducer = messageProducer;
+    }
 
-  @Transactional
-  public MessageResponseDto persist(MessageRequestDto messageRequestDto) {
+    @Transactional
+    public MessageResponseDto persist(MessageRequestDto messageRequestDto) {
 //    String email;
 //    String userPhone;
 //    String name;
-    logger.info("::: MessageRequestDto -> {} :::", messageRequestDto);
+        logger.info("::: MessageRequestDto -> {} :::", messageRequestDto);
 
 //    Message message = MapperMessages.INSTANCE.dtoToMessage(messageRequestDto);
 
-    Message message = new Message(null, messageRequestDto.getMessage(), messageRequestDto.getSender(),
-        messageRequestDto.getPhone(), messageRequestDto.getEmail(), MessageStatus.READY_TO_DELIVER,
-        Instant.now());
+        Message message = new Message(null, messageRequestDto.getMessage(), messageRequestDto.getSender(),
+                messageRequestDto.getPhone(), messageRequestDto.getEmail(), MessageStatus.READY_TO_DELIVER,
+                Instant.now());
 
-    logger.info("::: Message -> {} :::", message);
+        logger.info("::: Message -> {} :::", message);
 
-    try {
-      logger.info("::: Trying to persist in the DB :::");
-      Message persisted = messageRepository.save(message);
-      logger.info("::: Persistence OK! {} :::", persisted);
+        try {
+            logger.info("::: Trying to persist in the DB :::");
+            Message persisted = messageRepository.save(message);
+            logger.info("::: Persistence OK! {} :::", persisted);
 
-    } catch (DatabaseException dex) {
-      throw new DatabaseException("Error persisting Message Entity... User already exists..!");
+        } catch (DatabaseException dex) {
+            throw new DatabaseException("Error persisting Message Entity...!");
+        }
+
+        logger.info("::: Let's start notifying the subscribers! :::");
+//        notifyRabbitMq(message);
+
+        MessageEvent messageEvent = new MessageEvent(messageRequestDto.getSender(), messageRequestDto.getPhone(),
+                messageRequestDto.getEmail(), messageRequestDto.getMessage());
+        messageProducer.forwardMessage(messageEvent);
+
+        return new MessageResponseDto(message);
     }
 
-    logger.info("::: Let's start notifying the subscribers! :::");
-    notifyRabbitMq(message);
+//    private void notifyRabbitMq(Message message) {
+//
+//        notificationRabbitService.notify(message, "messages.routingKey", exchange);
+//    }
 
-    return new MessageResponseDto(message);
-  }
+    @Transactional(readOnly = true)
+    public List<MessageResponseDto> getMessage() {
 
-  private void notifyRabbitMq(Message message) {
+        List<Message> messages = messageRepository.findAll();
 
-    notificationRabbitService.notify(message, "messages.routingKey", exchange);
-  }
+        return messages.stream().map(MessageResponseDto::new).toList();
+    }
 
-  @Transactional(readOnly = true)
-  public List<MessageResponseDto> getMessage() {
+    @Transactional(readOnly = true)
+    public MessageResponseDto getMessageById(Long messageId) {
 
-    List<Message> messages = messageRepository.findAll();
+        Message message = messageRepository.findById(messageId).orElseThrow(
+                () -> new ResourceNotFoundException("Resource not found!"));
 
-    return messages.stream().map(MessageResponseDto::new).toList();
-  }
+        return new MessageResponseDto(message);
+    }
 
-  @Transactional(readOnly = true)
-  public MessageResponseDto getMessageById(Long messageId) {
+    @Transactional
+    public Page<MessageResponseDto> getPagedMessages(int page, int size, Pageable pageable) {
 
-    Message message = messageRepository.findById(messageId).orElseThrow(
-        () -> new ResourceNotFoundException("Resource not found!"));
+        Page<Message> messages = messageRepository.findAll(pageable);
 
-    return new MessageResponseDto(message);
-  }
-
-  @Transactional(readOnly = true)
-  public Page<MessageResponseDto> getPagedMessages(int page, int size, Pageable pageable) {
-
-    Page<Message> messages = messageRepository.findAll(pageable);
-
-    return messages.map(MessageResponseDto::new);
-  }
+        return messages.map(MessageResponseDto::new);
+    }
 }
 

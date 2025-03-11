@@ -9,11 +9,18 @@ import lombok.NoArgsConstructor;
 @Data
 public class MessageEvent {
 
-  private String name;
-  private String phone;
-  private String email;
-  private String advice;
-  public Message message;
+    private String sender;
+    private String phone;
+    private String email;
+    public String message;
+
+    public MessageEvent(com.gila.challenge.notification.entity.Message entity) {
+        sender = entity.getSender();
+        phone = entity.getPhone();
+        email = entity.getEmail();
+        message = entity.getMessages();
+    }
+
 
 }
 

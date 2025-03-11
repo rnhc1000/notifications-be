@@ -1,7 +1,11 @@
                                                                                                                                          **## Microservices Challenge
 
-This is how we faced the challenge of creating some microservices
-to consume notifications services.**
+This is how we faced the challenge of creating an application that
+allows the sending of a message through an Angular-based front-end app,
+providing an email and a phone number. The message is published to a RabbitMQ exchange
+that fuels the email queue, SMS queue and a message queue with the goal of
+how to build such application using Spring Boot, AWS Java SDK, Gmail and explore
+how the AMPQ protocol fits these requirements.
 
 ## _Table of contents_
 
@@ -12,7 +16,7 @@ to consume notifications services.**
 - [_Built with_](#built-with)
 - [_How I did it_](#how-i-did-it)
 - [_Continued development_](#continued-development)
-  - [_Useful resources_](#useful-resources)
+    - [_Useful resources_](#useful-resources)
 - [_Author_](#author)
 - [_Acknowledgments_](#acknowledgments)
 
@@ -43,7 +47,7 @@ Lombok, OpenAPI, H2 DB.
 _Requirements_
 
   ```
-  - rabbitMQ running at 127.0.0.1:5672 socket
+  - rabbitMQ container running at 127.0.0.1:5672
   - H2 database classpath:data/notification
   - profile active: dev
   - service socket: 127.0.0.1:8095
@@ -52,7 +56,7 @@ _Requirements_
 
 ## _Screenshot_
 
-[![](./notification.png)]()
+[![](./notificationDiagram-2025-03-08-182051.png)]()
 
 ## _Links_
 
@@ -69,30 +73,30 @@ package com.challenge.notification.entity.enums;
 
 public enum MessageStatus {
 
-  DELIVERED_SMS(1),
-  DELIVERED_EMAIL(2),
-  READY_TO_DELIVER(3),
-  WAITING_EXCHANGE(4);
+    DELIVERED_SMS(1),
+    DELIVERED_EMAIL(2),
+    READY_TO_DELIVER(3),
+    WAITING_EXCHANGE(4);
 
-  private final int codeStatus;
+    private final int codeStatus;
 
-  private MessageStatus(int codeStatus) {
-    this.codeStatus = codeStatus;
-  }
-
-  public int getCodeStatus() {
-    return codeStatus;
-  }
-
-  public static MessageStatus valueOf(int codeStatus) {
-    for (MessageStatus value : MessageStatus.values()) {
-      if (value.getCodeStatus() == codeStatus) {
-        return value;
-      }
+    private MessageStatus(int codeStatus) {
+        this.codeStatus = codeStatus;
     }
 
-    throw new IllegalArgumentException("Invalid MessageStatus code");
-  }
+    public int getCodeStatus() {
+        return codeStatus;
+    }
+
+    public static MessageStatus valueOf(int codeStatus) {
+        for (MessageStatus value : MessageStatus.values()) {
+            if (value.getCodeStatus() == codeStatus) {
+                return value;
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid MessageStatus code");
+    }
 }
 ``` 
 

@@ -1,5 +1,5 @@
-2025-03-10 09:02:42,849 INFO c.g.c.n.c.MessageController [http-nio-8095-exec-2]  ::: Page Number -> , Size of Each Page -> ,0, 4
-2025-03-10 09:02:42,919 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-2] 
+2025-03-11 09:43:58,959 INFO c.g.c.n.c.MessageController [http-nio-8095-exec-1]  ::: Page Number -> 0, Size of Each Page ->  7
+2025-03-11 09:43:59,210 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-1] 
     select
         m1_0.message_id,
         m1_0.created_at,
@@ -15,15 +15,119 @@
         ? rows 
     fetch
         first ? rows only
-2025-03-10 09:02:42,932 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-2] 
+2025-03-11 09:43:59,222 INFO o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-1] Slow query took 7 milliseconds [select m1_0.message_id,m1_0.created_at,m1_0.email,m1_0.message_status,m1_0.messages,m1_0.phone,m1_0.sender,m1_0.user_id from tb_messages m1_0 offset ? rows fetch first ? rows only]
+2025-03-11 09:43:59,323 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-1] 
     select
         count(m1_0.message_id) 
     from
         tb_messages m1_0
-2025-03-10 09:06:39,015 WARN o.s.w.s.h.AbstractHandlerExceptionResolver [http-nio-8095-exec-5] Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
-2025-03-10 09:06:48,510 WARN o.s.w.s.h.AbstractHandlerExceptionResolver [http-nio-8095-exec-4] Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
-2025-03-10 09:26:15,650 INFO o.s.b.w.e.t.GracefulShutdown [SpringApplicationShutdownHook] Commencing graceful shutdown. Waiting for active requests to complete
-2025-03-10 09:26:16,046 INFO o.s.b.w.e.t.GracefulShutdown [tomcat-shutdown] Graceful shutdown complete
-2025-03-10 09:26:22,224 INFO o.s.o.j.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-03-10 09:26:23,433 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
-2025-03-10 09:26:23,561 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2025-03-11 09:43:59,351 WARN o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier [http-nio-8095-exec-1] Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-03-11 09:44:26,442 INFO c.g.c.n.c.MessageController [http-nio-8095-exec-3]  ::: Page Number -> 0, Size of Each Page ->  7
+2025-03-11 09:44:26,446 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-3] 
+    select
+        m1_0.message_id,
+        m1_0.created_at,
+        m1_0.email,
+        m1_0.message_status,
+        m1_0.messages,
+        m1_0.phone,
+        m1_0.sender,
+        m1_0.user_id 
+    from
+        tb_messages m1_0 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-03-11 09:44:26,459 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-3] 
+    select
+        count(m1_0.message_id) 
+    from
+        tb_messages m1_0
+2025-03-11 10:43:22,430 INFO c.g.c.n.c.MessageController [http-nio-8095-exec-5] ::: MessageRequestDTo@controller: MessageRequestDto{message='This is a message to test how messages can be routed through AMS and Gmail', sender='Ricardo Ferreira', phone='5571993005555', email='rnhc1000@gmail.com'} :::
+2025-03-11 10:43:22,433 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-5] ::: MessageRequestDto -> MessageRequestDto{message='This is a message to test how messages can be routed through AMS and Gmail', sender='Ricardo Ferreira', phone='5571993005555', email='rnhc1000@gmail.com'} :::
+2025-03-11 10:43:22,434 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-5] ::: Message -> Message{messageId=null, messages='This is a message to test how messages can be routed through AMS and Gmail', sender='Ricardo Ferreira', phone='5571993005555', email='rnhc1000@gmail.com', createdAt=2025-03-11T13:43:22.433852034Z} :::
+2025-03-11 10:43:22,434 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-5] ::: Trying to persist in the DB :::
+2025-03-11 10:43:22,453 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-5] 
+    insert 
+    into
+        tb_messages
+        (created_at, email, message_status, messages, phone, sender, user_id, message_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+2025-03-11 10:43:22,459 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-5] ::: Persistence OK! Message{messageId=35, messages='This is a message to test how messages can be routed through AMS and Gmail', sender='Ricardo Ferreira', phone='5571993005555', email='rnhc1000@gmail.com', createdAt=2025-03-11T13:43:22.452192Z} :::
+2025-03-11 10:43:22,460 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-5] ::: Let's start notifying the subscribers! :::
+2025-03-11 10:43:22,461 INFO c.g.c.n.p.MessageProducer [http-nio-8095-exec-5] ::: Message event sent to RabbitMQ => MessageEvent(sender=Ricardo Ferreira, phone=5571993005555, email=rnhc1000@gmail.com, message=This is a message to test how messages can be routed through AMS and Gmail)
+2025-03-11 11:13:59,408 INFO c.g.c.n.c.MessageController [http-nio-8095-exec-7] ::: MessageRequestDTo@controller: MessageRequestDto{message='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+0013121234567', email='rnhc1000@gmail.com'} :::
+2025-03-11 11:13:59,410 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-7] ::: MessageRequestDto -> MessageRequestDto{message='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+0013121234567', email='rnhc1000@gmail.com'} :::
+2025-03-11 11:13:59,410 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-7] ::: Message -> Message{messageId=null, messages='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+0013121234567', email='rnhc1000@gmail.com', createdAt=2025-03-11T14:13:59.410426305Z} :::
+2025-03-11 11:13:59,411 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-7] ::: Trying to persist in the DB :::
+2025-03-11 11:13:59,413 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-7] 
+    insert 
+    into
+        tb_messages
+        (created_at, email, message_status, messages, phone, sender, user_id, message_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+2025-03-11 11:13:59,415 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-7] ::: Persistence OK! Message{messageId=36, messages='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+0013121234567', email='rnhc1000@gmail.com', createdAt=2025-03-11T14:13:59.412595Z} :::
+2025-03-11 11:13:59,416 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-7] ::: Let's start notifying the subscribers! :::
+2025-03-11 11:13:59,416 INFO c.g.c.n.p.MessageProducer [http-nio-8095-exec-7] ::: Message event sent to RabbitMQ => MessageEvent(sender=Ricardo Ferreira, phone=+0013121234567, email=rnhc1000@gmail.com, message=The quick brown fox dog jumps over the lazy dog....)
+2025-03-11 11:16:28,240 INFO c.g.c.n.c.MessageController [http-nio-8095-exec-1] ::: MessageRequestDTo@controller: MessageRequestDto{message='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+0013121234567', email='rnhc1000@gmail.com'} :::
+2025-03-11 11:16:28,241 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-1] ::: MessageRequestDto -> MessageRequestDto{message='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+0013121234567', email='rnhc1000@gmail.com'} :::
+2025-03-11 11:16:28,241 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-1] ::: Message -> Message{messageId=null, messages='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+0013121234567', email='rnhc1000@gmail.com', createdAt=2025-03-11T14:16:28.241431840Z} :::
+2025-03-11 11:16:28,242 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-1] ::: Trying to persist in the DB :::
+2025-03-11 11:16:28,243 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-1] 
+    insert 
+    into
+        tb_messages
+        (created_at, email, message_status, messages, phone, sender, user_id, message_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+2025-03-11 11:16:28,245 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-1] ::: Persistence OK! Message{messageId=37, messages='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+0013121234567', email='rnhc1000@gmail.com', createdAt=2025-03-11T14:16:28.243193Z} :::
+2025-03-11 11:16:28,246 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-1] ::: Let's start notifying the subscribers! :::
+2025-03-11 11:16:28,246 INFO c.g.c.n.p.MessageProducer [http-nio-8095-exec-1] ::: Message event sent to RabbitMQ => MessageEvent(sender=Ricardo Ferreira, phone=+0013121234567, email=rnhc1000@gmail.com, message=The quick brown fox dog jumps over the lazy dog....)
+2025-03-11 11:20:56,448 INFO c.g.c.n.c.MessageController [http-nio-8095-exec-4] ::: MessageRequestDTo@controller: MessageRequestDto{message='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+5571993005555', email='rnhc1000@hotmail.com'} :::
+2025-03-11 11:20:56,450 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-4] ::: MessageRequestDto -> MessageRequestDto{message='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+5571993005555', email='rnhc1000@hotmail.com'} :::
+2025-03-11 11:20:56,450 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-4] ::: Message -> Message{messageId=null, messages='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+5571993005555', email='rnhc1000@hotmail.com', createdAt=2025-03-11T14:20:56.450610145Z} :::
+2025-03-11 11:20:56,451 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-4] ::: Trying to persist in the DB :::
+2025-03-11 11:20:56,452 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-4] 
+    insert 
+    into
+        tb_messages
+        (created_at, email, message_status, messages, phone, sender, user_id, message_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+2025-03-11 11:20:56,454 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-4] ::: Persistence OK! Message{messageId=38, messages='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+5571993005555', email='rnhc1000@hotmail.com', createdAt=2025-03-11T14:20:56.451987Z} :::
+2025-03-11 11:20:56,454 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-4] ::: Let's start notifying the subscribers! :::
+2025-03-11 11:20:56,454 INFO c.g.c.n.p.MessageProducer [http-nio-8095-exec-4] ::: Message event sent to RabbitMQ => MessageEvent(sender=Ricardo Ferreira, phone=+5571993005555, email=rnhc1000@hotmail.com, message=The quick brown fox dog jumps over the lazy dog....)
+2025-03-11 11:32:40,073 INFO c.g.c.n.c.MessageController [http-nio-8095-exec-6] ::: MessageRequestDTo@controller: MessageRequestDto{message='Migrating Sotech CA to TLS13+...', sender='Ricardo Ferreira', phone='5571993005555', email='ricardo.ferreira@sotech.com.br'} :::
+2025-03-11 11:32:40,074 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-6] ::: MessageRequestDto -> MessageRequestDto{message='Migrating Sotech CA to TLS13+...', sender='Ricardo Ferreira', phone='5571993005555', email='ricardo.ferreira@sotech.com.br'} :::
+2025-03-11 11:32:40,075 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-6] ::: Message -> Message{messageId=null, messages='Migrating Sotech CA to TLS13+...', sender='Ricardo Ferreira', phone='5571993005555', email='ricardo.ferreira@sotech.com.br', createdAt=2025-03-11T14:32:40.074914195Z} :::
+2025-03-11 11:32:40,075 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-6] ::: Trying to persist in the DB :::
+2025-03-11 11:32:40,077 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-6] 
+    insert 
+    into
+        tb_messages
+        (created_at, email, message_status, messages, phone, sender, user_id, message_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+2025-03-11 11:32:40,079 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-6] ::: Persistence OK! Message{messageId=39, messages='Migrating Sotech CA to TLS13+...', sender='Ricardo Ferreira', phone='5571993005555', email='ricardo.ferreira@sotech.com.br', createdAt=2025-03-11T14:32:40.076524Z} :::
+2025-03-11 11:32:40,080 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-6] ::: Let's start notifying the subscribers! :::
+2025-03-11 11:32:40,080 INFO c.g.c.n.p.MessageProducer [http-nio-8095-exec-6] ::: Message event sent to RabbitMQ => MessageEvent(sender=Ricardo Ferreira, phone=5571993005555, email=ricardo.ferreira@sotech.com.br, message=Migrating Sotech CA to TLS13+...)
+2025-03-11 11:34:53,835 INFO c.g.c.n.c.MessageController [http-nio-8095-exec-10] ::: MessageRequestDTo@controller: MessageRequestDto{message='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+5571993005555', email='ricardo@ferreiras.dev.br'} :::
+2025-03-11 11:34:53,836 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-10] ::: MessageRequestDto -> MessageRequestDto{message='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+5571993005555', email='ricardo@ferreiras.dev.br'} :::
+2025-03-11 11:34:53,837 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-10] ::: Message -> Message{messageId=null, messages='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+5571993005555', email='ricardo@ferreiras.dev.br', createdAt=2025-03-11T14:34:53.837288398Z} :::
+2025-03-11 11:34:53,838 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-10] ::: Trying to persist in the DB :::
+2025-03-11 11:34:53,840 DEBUG o.h.e.j.s.SqlStatementLogger [http-nio-8095-exec-10] 
+    insert 
+    into
+        tb_messages
+        (created_at, email, message_status, messages, phone, sender, user_id, message_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+2025-03-11 11:34:53,842 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-10] ::: Persistence OK! Message{messageId=40, messages='The quick brown fox dog jumps over the lazy dog....', sender='Ricardo Ferreira', phone='+5571993005555', email='ricardo@ferreiras.dev.br', createdAt=2025-03-11T14:34:53.839834Z} :::
+2025-03-11 11:34:53,843 INFO c.g.c.n.s.MessageService [http-nio-8095-exec-10] ::: Let's start notifying the subscribers! :::
+2025-03-11 11:34:53,844 INFO c.g.c.n.p.MessageProducer [http-nio-8095-exec-10] ::: Message event sent to RabbitMQ => MessageEvent(sender=Ricardo Ferreira, phone=+5571993005555, email=ricardo@ferreiras.dev.br, message=The quick brown fox dog jumps over the lazy dog....)

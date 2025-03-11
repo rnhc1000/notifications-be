@@ -19,97 +19,109 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfiguration {
 
-  private static final Logger logger = LoggerFactory.getLogger(RabbitMQConfiguration.class);
+    private static final Logger logger = LoggerFactory.getLogger(RabbitMQConfiguration.class);
 
-  @Value("${rabbitmq.queue.messages.name}")
-  private String queueMessage;
+    // exchange
+    @Value("${rabbitmq.exchange.messages.name}")
+    private String exchangeMessage;
 
-  @Value("${rabbitmq.binding.messages.routing.key}")
-  private String messageRoutingKey;
+    // message queue
+    @Value("${rabbitmq.queue.messages.name}")
+    private String queueMessage;
 
-  @Value("${rabbitmq.exchange.messages.name}")
-  private String exchangeMessage;
+    @Value("${rabbitmq.binding.messages.routing.key}")
+    private String messageRoutingKey;
 
-  @Value("${rabbitmq.queue.email.name}")
-  private String queueEmail;
+    //email queue
+    @Value("${rabbitmq.queue.email.name}")
+    private String queueEmail;
 
-  @Value("${rabbitmq.binding.email.routing.key}")
-  private String emailRoutingKey;
+    @Value("${rabbitmq.binding.email.routing.key}")
+    private String emailRoutingKey;
 
-  @Value("${rabbitmq.queue.sns.name}")
-  private String queueSns;
+    // sns queue
+    @Value("${rabbitmq.queue.sns.name}")
+    private String queueSns;
 
-  @Value("${rabbitmq.binding.sns.routing.key}")
-  private String snsRoutingKey;
+    @Value("${rabbitmq.binding.sns.routing.key}")
+    private String snsRoutingKey;
 
-  @Bean
-  public Queue queueMessage() {
-    return new Queue(queueMessage);
-  }
+    @Bean
+    public Queue queueMessage() {
 
-  @Bean
-  public Queue queueEmail() {
-    return new Queue(queueEmail);
-  }
+        return new Queue(queueMessage);
+    }
 
-  @Bean
-  public Queue queueSns() {
-    return new Queue(queueSns);
-  }
+    @Bean
+    public Queue queueEmail() {
 
-  @Bean
-  public TopicExchange exchangeMessage() {
-    return ExchangeBuilder.topicExchange(exchangeMessage).build();
-  }
+        return new Queue(queueEmail);
+    }
 
-  @Bean
-  public RabbitAdmin createRabbitAdmin(ConnectionFactory connectionFactory) {
+    @Bean
+    public Queue queueSns() {
 
-    logger.info("::: RabbitMQ -> Creating Message Exchange and SNS, Email amd Message Queues... :::");
-    return new RabbitAdmin(connectionFactory);
-  }
+        return new Queue(queueSns);
+    }
 
-  @Bean
-  public ApplicationListener<ApplicationReadyEvent> inicializarAdmin(RabbitAdmin rabbitAdmin) {
-    return event -> rabbitAdmin.initialize();
-  }
+    @Bean
+    public TopicExchange exchangeMessage() {
 
-  @Bean
-  public Binding messageBinding() {
-    return BindingBuilder
-        .bind(queueMessage())
-        .to(exchangeMessage())
-        .with(messageRoutingKey);
-  }
+        return ExchangeBuilder.topicExchange(exchangeMessage).build();
+    }
 
-  @Bean
-  public Binding emailBinding() {
-    return BindingBuilder
-        .bind(queueEmail())
-        .to(exchangeMessage())
-        .with(emailRoutingKey);
-  }
+    @Bean
+    public RabbitAdmin createRabbitAdmin(ConnectionFactory connectionFactory) {
 
-  @Bean
-  public Binding snsBinding() {
-    return BindingBuilder
-        .bind(queueSns())
-        .to(exchangeMessage())
-        .with(snsRoutingKey);
-  }
+        logger.info("::: RabbitMQ -> Creating Message Exchange and SNS, Email amd Message Queues... :::");
+        return new RabbitAdmin(connectionFactory);
+    }
 
-  @Bean
-  public MessageConverter messageConverter() {
+    @Bean
+    public ApplicationListener<ApplicationReadyEvent> initializeAdmin(RabbitAdmin rabbitAdmin) {
 
-    return new Jackson2JsonMessageConverter();
-  }
+        return event -> rabbitAdmin.initialize();
+    }
 
-  @Bean
-  public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
-    RabbitTemplate rabbitTemplate = new RabbitTemplate();
-    rabbitTemplate.setConnectionFactory(connectionFactory);
-    rabbitTemplate.setMessageConverter(messageConverter());
+    @Bean
+    public Binding messageBinding() {
 
-    return rabbitTemplate;
-  }
+        return BindingBuilder
+                .bind(queueMessage())
+                .to(exchangeMessage())
+                .with(messageRoutingKey);
+    }
+
+    @Bean
+    public Binding emailBinding() {
+
+        return BindingBuilder
+                .bind(queueEmail())
+                .to(exchangeMessage())
+                .with(emailRoutingKey);
+    }
+
+    @Bean
+    public Binding snsBinding() {
+        
+        return BindingBuilder
+                .bind(queueSns())
+                .to(exchangeMessage())
+                .with(snsRoutingKey);
+    }
+
+    @Bean
+    public MessageConverter messageConverter() {
+
+        return new Jackson2JsonMessageConverter();
+    }
+
+    @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate();
+        rabbitTemplate.setConnectionFactory(connectionFactory);
+        rabbitTemplate.setMessageConverter(messageConverter());
+
+        return rabbitTemplate;
+    }
 }

@@ -9,32 +9,32 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MessageProducer {
-  private final Logger logger = LoggerFactory.getLogger(MessageProducer.class);
+    private final Logger logger = LoggerFactory.getLogger(MessageProducer.class);
 
-  @Value("${rabbitmq.exchange.messages.name}")
-  private String exchange;
+    @Value("${rabbitmq.exchange.messages.name}")
+    private String exchange;
 
-  @Value("${rabbitmq.binding.messages.routing.key}")
-  private String messageRoutingKey;
+    @Value("${rabbitmq.binding.messages.routing.key}")
+    private String messageRoutingKey;
 
-  @Value("${rabbitmq.binding.email.routing.key}")
-  private String emailRoutingKey;
+    @Value("${rabbitmq.binding.email.routing.key}")
+    private String emailRoutingKey;
 
-  @Value("${rabbitmq.binding.sns.routing.key}")
-  private String snsRoutingKey;
+    @Value("${rabbitmq.binding.sns.routing.key}")
+    private String snsRoutingKey;
 
-  public final RabbitTemplate rabbitTemplate;
+    public final RabbitTemplate rabbitTemplate;
 
-  public MessageProducer(RabbitTemplate rabbitTemplate) {
-    this.rabbitTemplate = rabbitTemplate;
-  }
+    public MessageProducer(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
-  public void forwardMessage(MessageEvent messageEvent) {
-    logger.info("::: Message event sent to RabbitMQ => {}", messageEvent);
+    public void forwardMessage(MessageEvent messageEvent) {
+        logger.info("::: Message event sent to RabbitMQ => {}", messageEvent);
 
-    rabbitTemplate.convertAndSend(exchange, emailRoutingKey, messageEvent);
-    rabbitTemplate.convertAndSend(exchange, messageRoutingKey, messageEvent);
-    rabbitTemplate.convertAndSend(exchange, snsRoutingKey, messageEvent);
-  }
+        rabbitTemplate.convertAndSend(exchange, emailRoutingKey, messageEvent);
+        rabbitTemplate.convertAndSend(exchange, messageRoutingKey, messageEvent);
+        rabbitTemplate.convertAndSend(exchange, snsRoutingKey, messageEvent);
+    }
 
 }
