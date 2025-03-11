@@ -2,9 +2,9 @@ package com.gila.challenge.notification.entity;
 
 import com.gila.challenge.notification.entity.enums.MessageStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
@@ -14,46 +14,51 @@ import java.time.Instant;
 @Table(name = "tb_messages")
 public class Message {
 
+  @Setter
   @Getter
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long messageId;
 
+  @Setter
   @Getter
-  @NotNull
   @Size(min = 1, max = 160)
-  private String message;
+  private String messages;
 
+  @Setter
   @Getter
   private String sender;
 
+  @Setter
   @Getter
   private String email;
 
+  @Setter
   @Getter
   private String phone;
 
+  @Setter
   @Getter
   @CreationTimestamp
   private Instant createdAt;
 
   private Integer messageStatus = MessageStatus.READY_TO_DELIVER.getCodeStatus();
 
+  @Setter
   @Getter
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "user_id")
-  private User userId;
+  private User user;
 
   public Message(
-      Long messageId, String message,
+      Long messageId, String messages,
       String sender, String phone,
-      User userId, String email,
+      String email,
       MessageStatus messageStatus, Instant createdAt) {
     this.messageId = messageId;
-    this.message = message;
+    this.messages = messages;
     this.sender = sender;
     this.phone = phone;
-    this.userId = userId;
     this.email = email;
     this.createdAt = createdAt;
     setMessageStatus(messageStatus);
@@ -69,51 +74,17 @@ public class Message {
     }
   }
 
-  public void setUserId(User userId) {
-    this.userId = userId;
-  }
-
-  public void setSender(String sender) {
-    this.sender = sender;
-  }
-
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public Message(Long messageId, Instant createdAt, User userId) {
-    this.messageId = messageId;
-    this.createdAt = createdAt;
-    this.userId = userId;
-  }
 
   public Message() {
-  }
-
-  public void setMessageId(Long messageId) {
-    this.messageId = messageId;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public void setCreatedAt(Instant createdAt) {
-    this.createdAt = createdAt;
   }
 
   @Override
   public String toString() {
     return "Message{" +
            "messageId=" + messageId +
-           ", message='" + message + '\'' +
+           ", messages='" + messages + '\'' +
            ", sender='" + sender + '\'' +
            ", phone='" + phone + '\'' +
-           ", userId=" + userId +
            ", email='" + email + '\'' +
            ", createdAt=" + createdAt +
            '}';

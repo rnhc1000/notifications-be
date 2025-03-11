@@ -1,56 +1,48 @@
 package com.gila.challenge.notification.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 
 @Getter
 @Entity
-@Table (name = "tb_users",
-        uniqueConstraints = {
-
-                @UniqueConstraint (columnNames = "userPhone")
-        })
-public class User implements Serializable {
-  private static final long serialVersionUUID = 1L;
+@Table(name = "tb_users")
+public class User {
   @Id
-  @GeneratedValue (strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long userId;
 
   @NotBlank
-  @Size (min = 4, max = 30)
+  @Size(min = 4, max = 30)
   private String userName;
 
   @NotBlank
   @Email
-  @Size (min = 8, max = 40)
+  @Size(min = 8, max = 40)
   private String userEmail;
 
   @NotBlank
-  @Size (min = 6, max = 20)
+  @Size(min = 6, max = 20)
   private String userPhone;
 
   private Integer countMessages = 1;
 
-  @JsonIgnore
-  @OneToMany
-  @JoinColumn(name = "user_id")
+  @Getter
+  @OneToMany(mappedBy = "user")
   private List<Message> messages = new LinkedList<>();
 
   public User(
-          Long userId,
-          String userName,
-          String userEmail,
-          String userPhone,
-          Integer countMessages
+      Long userId,
+      String userName,
+      String userEmail,
+      String userPhone,
+      Integer countMessages
   ) {
     this.userId = userId;
     this.userName = userName;

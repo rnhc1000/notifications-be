@@ -1,18 +1,42 @@
 package com.gila.challenge.notification.payload;
 
-import com.gila.challenge.notification.entity.User;
-import lombok.*;
+import com.gila.challenge.notification.entity.Message;
+import lombok.Getter;
 
-import java.io.Serializable;
-import java.time.Instant;
+@Getter
+public class MessageRequestDto {
 
+  private String message;
+  private String sender;
+  private String phone;
+  private String email;
 
+  public MessageRequestDto() {
+  }
 
-public record MessageRequestDto (
-        String message, String sender,
-        String phone,   String email,
-        Integer status) {
+  public MessageRequestDto(String message, String sender, String phone, String email) {
+    this.message = message;
+    this.sender = sender;
+    this.phone = phone;
+    this.email = email;
+  }
 
+  public MessageRequestDto(Message entity) {
+    message = entity.getMessages();
+    sender = entity.getSender();
+    phone = entity.getPhone();
+    email = entity.getEmail();
+  }
+
+  @Override
+  public String toString() {
+    return "MessageRequestDto{" +
+           "message='" + message + '\'' +
+           ", sender='" + sender + '\'' +
+           ", phone='" + phone + '\'' +
+           ", email='" + email + '\'' +
+           '}';
+  }
 }
 
 
