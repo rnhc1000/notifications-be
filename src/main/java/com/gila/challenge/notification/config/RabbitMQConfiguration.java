@@ -14,9 +14,11 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 
 @Configuration
+@PropertySource("classpath:rabbitmq.properties")
 public class RabbitMQConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(RabbitMQConfiguration.class);
@@ -103,7 +105,7 @@ public class RabbitMQConfiguration {
 
     @Bean
     public Binding snsBinding() {
-        
+
         return BindingBuilder
                 .bind(queueSns())
                 .to(exchangeMessage())
